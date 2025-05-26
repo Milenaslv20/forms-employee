@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styles from '../pages/styles.module.css'
+import styles from '../pages/stylesModule.module.css'
 
 export default function ModalError({openModalError, setOpenModalError, message, reload, onConfirm, onConfirmPassword}) {
   const [usuario, setUsuario] = useState('');

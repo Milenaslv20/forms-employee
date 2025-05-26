@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react'
-import styles from './styles.module.css'
+import stylesModule from './stylesModule.module.css'
+import '../styles/styles-registro.css'
 import { Link } from 'react-router-dom'
 import Axios from 'axios'
 import { useFuncionario } from './FuncionarioContext'
@@ -38,37 +39,15 @@ function Registro() {
   const [email, setEmail] = useState('');
 
   const [nomePai, setNomePai] = useState('');
-  const [cpfPai, setCpfPai] = useState('');
-  const [dataNascPai , setDataNascPai] = useState(null);
   const [nomeMae, setNomeMae] = useState('');
-  const [cpfMae, setCpfMae] = useState('');
-  const [dataNascMae, setDataNascMae] = useState(null);
+
 
   const [estadoCivil, setEstadoCivil] = useState('');
   const [nomeEsposoa, setNomeEsposoa] = useState('');
   const [filhos, setFilhos] = useState('');
   const [nomeFilhos, setNomeFilhos] = useState('');
 
-  const [cpf, setCpf] = useState('')
-  const [pisPasep, setPisPasep] = useState('');
-  const [selectCnh, setSelectCnh] = useState('')
-  const [cnh, setCnh] = useState('')
-  const [rg, setRg] = useState('')
-  const [rgDataExped, setRgDataExped] = useState('')
-  const [rgOrgaoExped, setRgOrgaoExped] = useState('')
-  const [rgUf, setRgUf] = useState('')
-  const [titulo, setTitulo] = useState('')
-  const [tituloZona, setTituloZona] = useState('')
-  const [tituloSecao, setTituloSecao] = useState('')
-  const [tituloUf, setTituloUf] = useState('')
-  const [selectDocMilitar, setSelectDocMilitar] = useState('')
-  const [docMilitar, setDocMilitar] = useState('')
-  const [docMilitarSerie, setDocMilitarSerie] = useState('')
-
   const [logadouro, setLogadouro] = useState('')
-  const [numCasa, setNumCasa] = useState('')
-  const [cep, setCep] = useState('')
-  const [rua, setRua] = useState('')
   const [bairro, setBairro] = useState('')
   const [cidades, setCidades] = useState([])
   const estadosCidades = {
@@ -139,10 +118,6 @@ function Registro() {
   const [estadoSelecionado, setEstadoSelecionado] = useState('')
   const [cidadeSelecionada, setCidadeSelecionada] = useState('')
 
-  const [banco, setBanco] = useState('')
-  const [bancoAgencia, setBancoAgencia] = useState('')
-  const [bancoConta, setBancoConta] = useState('')
-
   const [escolaridade, setEscolaridade] = useState('')
   const [cursos, setCursos] = useState('')
   const [curso1, setCurso1] = useState('')
@@ -150,18 +125,10 @@ function Registro() {
   const [curso3, setCurso3] = useState('')
   const [curso4, setCurso4] = useState('')
 
-  const [vinculo, setVinculo] = useState('')
-  const [setorDepartamento, setSetorDepartamento] = useState('')
-  const [cargoFuncao, setCargoFuncao] = useState('')
-  const [cargoEfetivo, setCargoEfetivo] = useState('')
-  const [statusServidor, setStatusServidor] = useState('')
-  const [matriculaOrigem, setMatriculaOrigem] = useState('')
-  const [orgaoOrigem, setOrgaoOrigem] = useState('')
-  const [matriculaSeai, setMatriculaSeai] = useState('')
-  const [files, setFiles] = useState([])
-  const fileInputRhef = useRef(null)
-  const [dataEntregaDocs, setDataEntregaDocs] = useState('')
-  const [anotacoes, setAnotacoes] = useState('')
+  const [funcao, setFuncao] = useState('')
+  const [contrato, setContrato] = useState('')
+  const [setor, setSetor] = useState('')
+
 
   //TODO: INPUT CIDADES
   const handleEstados = (e) =>{
@@ -193,17 +160,6 @@ function Registro() {
       reader.readAsDataURL(file);  // Lê o arquivo como URL de dados
     }
   };
-
-  //TODO: INPUT FILES
-  const handleFileChange = (e) =>{
-    const selectedFiles = Array.from(e.target.files);
-    setFiles(selectedFiles);
-  };
-
-  function clearFiles(){
-    setFiles([])
-    fileInputRhef.current.value = ""
-  }
 
   //TODO: VERIFICATION USER
     const verificarUsuario = async (cpf) =>{
@@ -324,102 +280,13 @@ function Registro() {
       return false;
     }
 
-    if(cpf.trim() === ''){
-      setModalMessageError("Preencha o CPF")
-      setOpenModalError(true)
-      return false;
-    }
-
-    if(rg.trim() === ''){
-      setModalMessageError("Preencha o RG")
-      setOpenModalError(true)
-      return false;
-    }
-
-    if(rgDataExped.trim() === ''){
-      setModalMessageError("Preencha a data de expedição do RG")
-      setOpenModalError(true)
-      return false;
-    }
-
-    if(rgOrgaoExped.trim() === ''){
-      setModalMessageError("Preencha o orgão de expedição do RG")
-      setOpenModalError(true)
-      return false;
-    }
-
-    if(rgUf.trim() === ''){
-      setModalMessageError("Preencha a UF do RG")
-      setOpenModalError(true)
-      return false;
-    }
-
-    if(titulo.trim() === ''){
-      setModalMessageError("Preencha o Título")
-      setOpenModalError(true)
-      return false;
-    }
-
-    if(tituloZona.trim() === ''){
-      setModalMessageError("Preencha a zona do título")
-      setOpenModalError(true)
-      return false;
-    }
-
-    if(tituloSecao.trim() === ''){
-      setModalMessageError("Preencha a seção do título")
-      setOpenModalError(true)
-      return false;
-    }
-
-    if(tituloUf.trim() === ''){
-      setModalMessageError("Preencha a UF do título")
-      setOpenModalError(true)
-      return false;
-    }
-
     if(bairro.trim() === ''){
       setModalMessageError("Preencha o Bairro")
       setOpenModalError(true)
     }
 
-    if(numCasa.trim() === ''){
-      setModalMessageError("Preencha o número da casa")
-      setOpenModalError(true)
-      return false;
-    }
-
-    if(rua.trim() === ''){
-      setModalMessageError("Preencha a Rua")
-      setOpenModalError(true)
-      return false;
-    }
-
     if(logadouro.trim() === ''){
       setModalMessageError("Preencha o Logadouro")
-      setOpenModalError(true)
-      return false;
-    }
-
-    if(banco.trim() === ''){
-      setModalMessageError("Preencha o nome do banco")
-      setOpenModalError(true)
-      return false;
-    }
-    if(regex.test(banco) === true){
-      setModalMessageError("Preencha o nome do banco apenas com letras")
-      setOpenModalError(true)
-      return false;
-    }
-
-    if(bancoAgencia.trim() === ''){
-      setModalMessageError("Preencha a agência do banco")
-      setOpenModalError(true)
-      return false;
-    }
-
-    if(bancoConta.trim() === ''){
-      setModalMessageError("Preencha a conta do banco")
       setOpenModalError(true)
       return false;
     }
@@ -436,38 +303,8 @@ function Registro() {
       return false;
     }
 
-    if(vinculo.trim() === ''){
-      setModalMessageError("Preencha o Vínculo")
-      setOpenModalError(true)
-      return false;
-    }
-
-    if(setorDepartamento.trim() === ''){
-      setModalMessageError("Preencha o Setor/Departamento")
-      setOpenModalError(true)
-      return false;
-    }
-
-    if(cargoFuncao.trim() === ''){
-      setModalMessageError("Preencha o Cargo/Função")
-      setOpenModalError(true)
-      return false;
-    }
-
-    if(statusServidor.trim() === ''){
-      setModalMessageError("Preencha o Status do servidor")
-      setOpenModalError(true)
-      return false;
-    }
-
     if(cursos.trim() === ''){
       setModalMessageError("Preencha a quantidade de cursos")
-      setOpenModalError(true)
-      return false;
-    }
-
-    if(dataEntregaDocs.trim() === ''){
-      setModalMessageError("Preencha a Data de entrega dos documentos")
       setOpenModalError(true)
       return false;
     }
@@ -506,41 +343,16 @@ function Registro() {
     formData.append("email", emptyInputs(email));
       
     formData.append("nomePai", nomePai);
-    formData.append("cpfPai", emptyInputsCpf(cpfPai));
-    formData.append("dataNascPai", emptyInputsDate(dataNascPai));
     formData.append("nomeMae", nomeMae);
-    formData.append("cpfMae", emptyInputsCpf(cpfMae));
-    formData.append("dataNascMae", emptyInputsDate(dataNascMae));
     formData.append("estadoCivil", estadoCivil);
     formData.append("nomeEsposoa", emptyInputs(nomeEsposoa));
     formData.append("filhos", filhos);
     formData.append("nomeFilhos", emptyInputs(nomeFilhos));
       
-    formData.append("cpf", cpf);
-    formData.append("pisPasep", emptyInputs(pisPasep));
-    formData.append("cnh", emptyInputs(cnh));
-    formData.append("rg", rg);
-    formData.append("rgDataExped", rgDataExped);
-    formData.append("rgOrgaoExped", rgOrgaoExped);
-    formData.append("rgUf", rgUf);
-    formData.append("titulo", titulo);
-    formData.append("tituloZona", tituloZona);
-    formData.append("tituloSecao", tituloSecao);
-    formData.append("tituloUf", tituloUf);
-    formData.append("docMilitar", emptyInputs(docMilitar));
-    formData.append("docMilitarSerie", emptyInputs(docMilitarSerie));
-      
     formData.append("bairro", bairro);
-    formData.append("numCasa", numCasa);
-    formData.append("cep", cep);
-    formData.append("rua", rua);
     formData.append("logadouro", logadouro);
     formData.append("cidadeSelecionada", cidadeSelecionada);
-    formData.append("estadoSelecionado", estadoSelecionado)
-      
-    formData.append("banco", banco);
-    formData.append("bancoAgencia", bancoAgencia);
-    formData.append("bancoConta", bancoConta);
+    formData.append("estadoSelecionado", estadoSelecionado);
       
     formData.append("escolaridade", escolaridade);
     formData.append("cursos", cursos);
@@ -548,18 +360,11 @@ function Registro() {
     formData.append("curso2", emptyInputs(curso2));
     formData.append("curso3", emptyInputs(curso3));
     formData.append("curso4", emptyInputs(curso4));
-     
-    formData.append("vinculo", vinculo);
-    formData.append("setorDepartamento", setorDepartamento);
-    formData.append("cargoFuncao", cargoFuncao);
-    formData.append("cargoEfetivo", emptyInputs(cargoEfetivo));
-    formData.append("statusServidor", statusServidor);
-    formData.append("matriculaOrigem", emptyInputs(matriculaOrigem));
-    formData.append("orgaoOrigem", emptyInputs(orgaoOrigem));
-    formData.append("matriculaSeai", emptyInputs(matriculaSeai));
-    formData.append("arquivosNome", files);
-    formData.append("dataEntregaDocs", emptyInputsDate(dataEntregaDocs));
-    formData.append("anotacoes", emptyInputs(anotacoes));
+
+    formData.append("funcao", emptyInputs(funcao));
+    formData.append("contrato", contrato);
+    formData.append("setor", emptyInputs(setor));
+
 
     //TODO: SEND TO BACKEND
     try{
@@ -582,14 +387,6 @@ function Registro() {
 
       if(imagem) {
         formDatas.append('imagem', imagem)
-      }
-
-      if(files.length > 0){
-        files.forEach(file =>{
-          formDatas.append('pdfs', file)
-        })
-      } else{
-        formDatas.append('pdfs', null)
       }
 
       // 2. Upload
@@ -624,44 +421,17 @@ function Registro() {
         setEmail("");
 
         setNomePai("");
-        setCpfPai("");
-        setDataNascPai("");
         setNomeMae("");
-        setCpfMae("");
-        setDataNascMae("");
 
         setEstadoCivil("");
         setNomeEsposoa("");
         setFilhos("");
         setNomeFilhos("");
 
-        setCpf("");
-        setPisPasep("");
-        setSelectCnh("");
-        setCnh("");
-        setRg("");
-        setRgDataExped("");
-        setRgOrgaoExped("");
-        setRgUf("");
-        setTitulo("");
-        setTituloZona("");
-        setTituloSecao('');
-        setTituloUf("");
-        setSelectDocMilitar("");
-        setDocMilitar("");
-        setDocMilitarSerie("");
-
         setLogadouro("");
-        setNumCasa("");
-        setCep("");
-        setRua("");
         setBairro("");
         setEstadoSelecionado("");
         setCidadeSelecionada("");
-
-        setBanco("");
-        setBancoAgencia("");
-        setBancoConta("");
 
         setEscolaridade("");
         setCursos("");
@@ -669,19 +439,6 @@ function Registro() {
         setCurso2("");
         setCurso3("");
         setCurso4("");
-
-        setVinculo("");
-        setSetorDepartamento("");
-        setCargoFuncao("");
-        setCargoEfetivo("");
-        setStatusServidor("");
-        setMatriculaOrigem("");
-        setOrgaoOrigem("");
-        setMatriculaSeai("");
-        setFiles([]);
-        fileInputRhef.current.value = ""
-        setDataEntregaDocs("");
-        setAnotacoes("");
       }
     } catch(err){
       setOpenModalError(true)
@@ -692,22 +449,22 @@ function Registro() {
 
 
   return (
-    <div className={styles.container_register}>
-      <div className={styles.nav_register}>
-        <div className={styles.navigation_bar}>
-          <h1 className={styles.link_register}>Registrar Funcionário</h1>
-          <Link to={"/historico"} className={styles.link_history}>Histórico de Funcionários</Link>
+    <div className={stylesModule.container_register}>
+      <div className={stylesModule.nav_register}>
+        <div className={stylesModule.navigation_bar}>
+          <h1 className={stylesModule.link_register}>Registrar Funcionário</h1>
+          <Link to={"/historico"} className={stylesModule.link_history}>Histórico de Funcionários</Link>
         </div>
       </div>
 
-      <div className={styles.container_record}>
-        <div className={styles.record}>
+      <div className="container_record">
+        <div className="record">
           {/***TODO: INPUT IMAGEM***/}
-          <form className={styles.foto} method='post' encType='multipart/form-data'>
+          <form className="foto" method='post' encType='multipart/form-data'>
             <input
               name='imagem'
               ref={inputRef} 
-              className={styles.img}
+              className="img"
               multiple
               type='file' 
               accept='image/*' 
@@ -717,11 +474,11 @@ function Registro() {
             {selectedImage && <img src={selectedImage} alt=""></img>}
           </form>
 
-          <div className={styles.inputs}>
+          <div className="inputs">
             {/***TODO: INPUT DADOS PESSOAIS***/}
-            <form className={styles.form_dados_pessoais} autoComplete='off' method='post' encType='multipart/form-data'>
-              <div className={styles.form_group}>
-                <div className={styles.div_input} id={styles.inptspan}>
+            <form className="form_dados_pessoais" autoComplete='off' method='post' encType='multipart/form-data'>
+              <div className={stylesModule.form_group}>
+                <div className={stylesModule.div_input} id={stylesModule.inptspan}>
                   <label for="nome">Nome Completo:</label>
                   <input 
                     type='text' 
@@ -734,7 +491,7 @@ function Registro() {
                   </input>
                 </div>
 
-                <div className={styles.div_input}>
+                <div className={stylesModule.div_input}>
                   <label for="sexo">Sexo:</label>
                   <select id="sexo" name='sexo' value={sexo} onChange={e => setSexo(e.target.value)}>
                     <option disabled={true} value="">Selecione</option>
@@ -746,8 +503,8 @@ function Registro() {
                 </div>
               </div>
 
-              <div className={styles.form_group}> 
-                <div className={styles.div_input}>
+              <div className={stylesModule.form_group}> 
+                <div className={stylesModule.div_input}>
                   <label for="data_nasc">Data Nasc:</label>
                   <input 
                     type='date' 
@@ -758,7 +515,7 @@ function Registro() {
                   </input>
                 </div>
 
-                <div className={styles.div_input}>
+                <div className={stylesModule.div_input}>
                   <label for="estadoAtual">Estado:</label>
                   <select id='estadoAtual' name='estadoAtual' value={estadoAtual} onChange={(e) => {setEstadoAtual(e.target.value)}}>
                     <option disabled={true} value="">Selecione</option>
@@ -767,7 +524,7 @@ function Registro() {
                   </select>
                 </div>
 
-                <div className={styles.div_input} id={styles.inptspan}>
+                <div className={stylesModule.div_input} id={stylesModule.inptspan}>
                   <label for="nacionalidade">Nacionalidade:</label>
                   <input 
                     type='text' 
@@ -780,8 +537,8 @@ function Registro() {
                 </div>
               </div>
 
-              <div className={styles.form_group}>
-                <div className={styles.div_input} id={styles.inptspan}>
+              <div className={stylesModule.form_group}>
+                <div className={stylesModule.div_input} id={stylesModule.inptspan}>
                   <label for="Naturalidade">Naturalidade:</label>
                   <input
                     type='text' 
@@ -793,7 +550,7 @@ function Registro() {
                   </input>
                 </div>
 
-                <div className={styles.div_input}>
+                <div className={stylesModule.div_input}>
                   <label for="raca">Raça:</label>
                   <select id='raca' name='raca' value={raca} onChange={(e) => {setRaca(e.target.value)}}>
                     <option disabled={true} value="">Selecione</option>
@@ -806,7 +563,7 @@ function Registro() {
                   </select>
                 </div>
 
-                <div className={styles.div_input} id={styles.inptspan}>
+                <div className={stylesModule.div_input} id={stylesModule.inptspan}>
                   <label for="telefone">Telefone:</label>
                   <IMaskInput
                     mask="(00) 00000-0000"
@@ -818,8 +575,8 @@ function Registro() {
                 </div>
               </div>
 
-              <div className={styles.form_group}>
-                <div className={styles.div_input} id={styles.inptspan}>
+              <div className={stylesModule.form_group}>
+                <div className={stylesModule.div_input} id={stylesModule.inptspan}>
                   <label for="email">Email:</label>
                   <input 
                     type='email' 
@@ -835,15 +592,15 @@ function Registro() {
 
 
             {/***TODO: INPUT DADOS FAMILIARES***/}
-            <form className={styles.form_dados_familiares} autoComplete='off' method='post' encType='multipart/form-data'>
-              <div className={styles.divisoria}>
+            <form className="form_dados_familiares" autoComplete='off' method='post' encType='multipart/form-data'>
+              <div className={stylesModule.divisoria}>
                 <hr></hr>
-                <span className={styles.title_divis}>Dados Familiares</span>
+                <span className={stylesModule.title_divis}>Dados Familiares</span>
               </div>
 
-              <span className={styles.spandf}>Pai</span>
-              <div className={styles.form_group}>
-                <div className={styles.div_input} id={styles.inptspan}>
+              <span className="spandf">Pai</span>
+              <div className={stylesModule.form_group}>
+                <div className={stylesModule.div_input} id={stylesModule.inptspan}>
                   <label for="nome_pai">Nome Completo:</label>
                   <input 
                     type='text' 
@@ -854,33 +611,11 @@ function Registro() {
                     onChange={(e) => {setNomePai(e.target.value)}}>
                   </input>
                 </div>
-
-                <div className={styles.div_input} id={styles.inptspan}>
-                  <label for="cpf_pai">CPF:</label>
-                  <IMaskInput
-                    id='cpf_pai' 
-                    name='cpf_pai' 
-                    mask="000.000.000-00"
-                    value={cpfPai}
-                    onAccept={(value) => setCpfPai(value)}
-                  />
-                </div>
-
-                <div className={styles.div_input}>
-                  <label for="data_nasc">Data Nasc:</label>
-                  <input 
-                    type='date' 
-                    id='data_nasc_pai' 
-                    name='data_nasc_pai' 
-                    value={dataNascPai}
-                    onChange={(e) => {setDataNascPai(e.target.value)}}>
-                  </input>
-                </div>
               </div>
 
-              <span className={styles.spandf}>Mãe</span>
-              <div className={styles.form_group} id={styles.form_group_mae}>
-                <div className={styles.div_input} id={styles.inptspan}>
+              <span className="spandf">Mãe</span>
+              <div className={stylesModule.form_group} id={stylesModule.form_group_mae}>
+                <div className={stylesModule.div_input} id={stylesModule.inptspan}>
                   <label for="nome_mae">Nome Completo:</label>
                   <input 
                     type='text' 
@@ -891,33 +626,11 @@ function Registro() {
                     onChange={(e) => {setNomeMae(e.target.value)}}>
                   </input>
                 </div>
-
-                <div className={styles.div_input} id={styles.inptspan}>
-                  <label for="cpf_mae">CPF:</label>
-                    <IMaskInput
-                      id='cpf_mae' 
-                      name='cpf_mae' 
-                      mask="000.000.000-00"
-                      value={cpfMae}
-                      onAccept={(value) => setCpfMae(value)}
-                  />
-                </div>
-
-                <div className={styles.div_input}>
-                  <label for="data_nasc_mae">Data Nasc:</label>
-                  <input 
-                    type='date' 
-                    id='data_nasc_mae' 
-                    name='data_nasc_mae' 
-                    value={dataNascMae} 
-                    onChange={(e) => {setDataNascMae(e.target.value)}}>
-                  </input>
-                </div>
               </div>
 
-              <div id={styles.dado_civil}>
-                <div className={styles.form_group}>
-                  <div className={styles.div_input}>
+              <div id={stylesModule.dado_civil}>
+                <div className={stylesModule.form_group}>
+                  <div className={stylesModule.div_input}>
                     <label for="estado_civil">Estado Civil:</label>
                     <select id='estado_civil' name='estado_civil' value={estadoCivil} onChange={(e) => {setEstadoCivil(e.target.value)}}>
                       <option disabled={true} value="">Selecione</option>
@@ -931,7 +644,7 @@ function Registro() {
                     </select>
                   </div>
 
-                  <div className={`${styles.div_input} ${estadoCivil !== "Casado" &&  estadoCivil !== "União Estável" || estadoCivil === "" ? styles.disabled : ""}`} id={styles.inptspan}>
+                  <div className={`${stylesModule.div_input} ${estadoCivil !== "Casado" &&  estadoCivil !== "União Estável" || estadoCivil === "" ? stylesModule.disabled : ""}`} id={stylesModule.inptspan}>
                     <label for="nome_esposoa">Nome Cônjuge:</label>
                     <input 
                       type='text' 
@@ -945,8 +658,8 @@ function Registro() {
                 </div>
               </div>
 
-              <div className={styles.form_group}>
-                <div className={styles.div_input}>
+              <div className={stylesModule.form_group}>
+                <div className={stylesModule.div_input}>
                   <label for="filhos">Filhos:</label>
                   <select id='filhos' name='filhos' value={filhos} onChange={(e) => {setFilhos(e.target.value)}}>
                     <option disabled={true} value="">Selecione</option>
@@ -958,7 +671,7 @@ function Registro() {
                   </select>
                 </div>
 
-                <div className={`${styles.div_input} ${filhos === "0" || filhos === "" ? styles.disabled : ""}`} id={styles.inptspan}>
+                <div className={`${stylesModule.div_input} ${filhos === "0" || filhos === "" ? stylesModule.disabled : ""}`} id={stylesModule.inptspan}>
                   <label for="nome_filhos">Nome Filhos:</label>
                   <input 
                     type='text' 
@@ -974,254 +687,15 @@ function Registro() {
             </div>
           </form>
 
-            {/***TODO: INPUT DOCUMENTOS***/}
-            <form className={styles.form_dados_documentos} autoComplete='off' method='post' encType='multipart/form-data'>
-              <div className={styles.divisoria}>
-                <hr></hr>
-                <span className={styles.title_divis}>Documentos</span>
-              </div>
-
-              <div className={styles.form_group}>
-                <div className={styles.div_input}>
-                  <label>CPF:</label>
-                  <IMaskInput
-                    id='cpf' 
-                    name='cpf' 
-                    mask="000.000.000-00"
-                    value={cpf}
-                    onAccept={(value) => {
-                      setCpf(value)
-                      if (value.length === 14) {
-                        verificarUsuario(value);
-                      }
-                    }}
-                  />
-                </div>
-
-                <div className={styles.div_input} id={styles.inptspan}>
-                  <label for="pis_pasep">PIS/PASEP:</label>
-                  <input 
-                    type='text' 
-                    id='pis_pasep' 
-                    name='pis_pasep' 
-                    value={pisPasep} 
-                    maxLength={15}
-                    onChange={(e) => {setPisPasep(e.target.value)}}>
-                  </input>
-                </div>
-
-                <div className={styles.div_input}>
-                  <select id='selectCnh' name='selectCnh' value={selectCnh} onChange={(e) => {setSelectCnh(e.target.value)}}>
-                    <option value="Não">Não</option>
-                    <option value="Sim">Sim</option>
-                  </select>
-                </div>
-
-                <div className={`${styles.div_input} ${selectCnh === "Não" || selectCnh === "" ? styles.disabled : ""}`} id={styles.inptspan}>
-                  <label for="cnh">CNH:</label>
-                  <input 
-                    type='number' 
-                    id='cnh' 
-                    name='cnh' 
-                    value={cnh} 
-                    maxLength={13}
-                    disabled={selectCnh === "Não" || selectCnh === "" ? styles.disabled : ""}
-                    onChange={(e) => {setCnh(String(e.target.value))}}>
-                  </input>
-                </div>
-              </div>
-
-              <div className={styles.form_group}>
-                <div className={styles.div_input} id={styles.inptspan}>
-                  <label for="rg">RG:</label>
-                  <input 
-                    type='text' 
-                    id='rg' 
-                    name='rg' 
-                    value={rg} 
-                    maxLength={9}
-                    onChange={(e) => {setRg(e.target.value)}}>
-                  </input>
-                </div>
-
-                <div className={styles.div_input}>
-                  <label for="rg_data_exped">Data Exped:</label>
-                  <input 
-                    type='date' 
-                    id='rg_data_exped' 
-                    name='rg_data_exped' 
-                    value={rgDataExped} 
-                    onChange={(e) => {setRgDataExped(e.target.value)}}>
-                  </input>
-                </div>
-
-                <div className={styles.div_input}>
-                  <label for="rg_orgao_exped">Orgão Exped:</label>
-                  <select id='rg_orgao_exped' name='rg_orgao_exped' value={rgOrgaoExped} onChange={(e) => {setRgOrgaoExped(e.target.value)}}>
-                    <option disabled={true} value="">Selecione</option>
-                    <option value="SSP/AM">SSP/AM</option>
-                    <option value="PC/AM">PC/AM</option>
-                    <option value="PM/AM">PM/AM</option>
-                    <option value="Detran/AM">Detran/AM</option>
-                    <option value="Outros">Outros</option>
-                    <option value="NI">NI</option>
-                  </select>
-                </div>
-
-                <div className={styles.div_input}>
-                  <label for="rg_uf">UF:</label>
-                  <select id="rg_uf" name="rg_uf" value={rgUf} onChange={(e) => {setRgUf(e.target.value)}}>
-                    <option disabled={true} value="">Selecione:</option>
-                    <option value="AM">AM</option>
-                    <option value="AC">AC</option>
-                    <option value="AL">AL</option>
-                    <option value="AP">AP</option>
-                    <option value="BA">BA</option>
-                    <option value="CE">CE</option>
-                    <option value="DF">DF</option>
-                    <option value="ES">ES</option>
-                    <option value="GO">GO</option>
-                    <option value="MA">MA</option>
-                    <option value="MT">MT</option>
-                    <option value="MS">MS</option>
-                    <option value="MG">MG</option>
-                    <option value="PA">PA</option>
-                    <option value="PB">PB</option>
-                    <option value="PR">PR</option>
-                    <option value="PE">PE</option>
-                    <option value="PI">PI</option>
-                    <option value="RJ">RJ</option>
-                    <option value="RN">RN</option>
-                    <option value="RS">RS</option>
-                    <option value="RO">RO</option>
-                    <option value="RR">RR</option>
-                    <option value="SC">SC</option>
-                    <option value="SP">SP</option>
-                    <option value="SE">SE</option>
-                    <option value="TO">TO</option>
-                    <option value="NI">NI</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className={styles.form_group}>
-                <div className={styles.div_input} id={styles.inptspan}>
-                  <label for="titulo">Título:</label>
-                  <input 
-                    type='text' 
-                    id='titulo' 
-                    name='titulo' 
-                    value={titulo} 
-                    maxLength={15}
-                    onChange={(e) => {setTitulo(e.target.value)}}>
-                  </input>
-                </div>
-
-                <div className={styles.div_input} id={styles.inptspan}>
-                  <label for="titulo_zona">Zona:</label>
-                  <input 
-                    type='text' 
-                    id='titulo_zona'
-                    name='titulo_zona' 
-                    value={tituloZona} 
-                    maxLength={4}
-                    onChange={(e) => {setTituloZona(e.target.value)}}>
-                  </input>
-                </div>
-
-                <div className={styles.div_input} id={styles.inptspan}>
-                  <label for="titulo_secao">Seção:</label>
-                  <input 
-                    type='text' 
-                    id='titulo_secao' 
-                    name='titulo_secao' 
-                    value={tituloSecao} 
-                    maxLength={5}
-                    onChange={(e) => {setTituloSecao(e.target.value)}}>
-                  </input>
-                </div>
-
-                <div className={styles.div_input}>
-                  <label for="titulo_uf">UF:</label>
-                  <select id="titulo_uf" name="titulo_uf" value={tituloUf} onChange={(e) => {setTituloUf(e.target.value)}}>
-                    <option disabled={true} value="">Selecione:</option>
-                    <option value="AM">AM</option>
-                    <option value="AC">AC</option>
-                    <option value="AL">AL</option>
-                    <option value="AP">AP</option>
-                    <option value="BA">BA</option>
-                    <option value="CE">CE</option>
-                    <option value="DF">DF</option>
-                    <option value="ES">ES</option>
-                    <option value="GO">GO</option>
-                    <option value="MA">MA</option>
-                    <option value="MT">MT</option>
-                    <option value="MS">MS</option>
-                    <option value="MG">MG</option>
-                    <option value="PA">PA</option>
-                    <option value="PB">PB</option>
-                    <option value="PR">PR</option>
-                    <option value="PE">PE</option>
-                    <option value="PI">PI</option>
-                    <option value="RJ">RJ</option>
-                    <option value="RN">RN</option>
-                    <option value="RS">RS</option>
-                    <option value="RO">RO</option>
-                    <option value="RR">RR</option>
-                    <option value="SC">SC</option>
-                    <option value="SP">SP</option>
-                    <option value="SE">SE</option>
-                    <option value="TO">TO</option>
-                    <option value="NI">NI</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className={styles.form_group}>
-                <div className={styles.div_input}>
-                    <select id='selectDocMilitar' name='selectDocMilitar' value={selectDocMilitar} onChange={(e) => {setSelectDocMilitar(e.target.value)}}>
-                      <option value="Não">Não</option>
-                      <option value="Sim">Sim</option>
-                    </select>
-                  </div>
-
-                  <div className={`${styles.div_input} ${selectDocMilitar === "Não" || selectDocMilitar === "" ? styles.disabled : ""}`} id={styles.inptspan}>
-                    <label for="doc_militar">Doc. Militar:</label>
-                    <input
-                      type='text' 
-                      id='doc_militar' 
-                      name='doc_militar' 
-                      value={docMilitar} 
-                      maxLength={15}
-                      disabled={selectDocMilitar === "Não" || selectDocMilitar === "" ? styles.disabled : ""} 
-                      onChange={(e) => {setDocMilitar(e.target.value)}}>
-                    </input>
-                  </div>
-
-                  <div className={`${styles.div_input} ${selectDocMilitar === "Não" || selectDocMilitar === "" ? styles.disabled : ""}`} id={styles.inptspan}> 
-                    <label for="doc_militar_serie">Série:</label>
-                    <input 
-                      type='text' 
-                      id='doc_militar_serie' 
-                      name='doc_militar_serie' 
-                      value={docMilitarSerie} 
-                      maxLength={12}
-                      disabled={selectDocMilitar === "Não" || selectDocMilitar === "" ? styles.disabled : ""} 
-                      onChange={(e) => {setDocMilitarSerie(e.target.value)}}>
-                    </input>
-                  </div>
-              </div>
-            </form>
-
             {/***TODO: INPUT DADOS ENDEREÇO***/}
-            <form className={styles.form_dados_endereco} autoComplete='off' method='post' encType='multipart/form-data'>
-              <div className={styles.divisoria} id={styles.divis_docs}>
+            <form className="form_dados_endereco" autoComplete='off' method='post' encType='multipart/form-data'>
+              <div className={stylesModule.divisoria} id={stylesModule.divis_docs}>
                 <hr></hr>
-                <span className={styles.title_divis}>Endereço</span>
+                <span className={stylesModule.title_divis}>Endereço</span>
               </div>
 
-              <div className={styles.form_group}>
-                <div className={styles.div_input} id={styles.inptspan}>
+              <div className={stylesModule.form_group}>
+                <div className={stylesModule.div_input} id={stylesModule.inptspan}>
                   <label for="bairro">Bairro:</label>
                   <input
                     type='text' 
@@ -1233,42 +707,7 @@ function Registro() {
                   </input>
                 </div>
 
-                <div className={styles.div_input} id={styles.inptspan}>
-                  <label for="num_casa">Número:</label>
-                  <input 
-                    type='text' 
-                    id='num_casa' 
-                    name='num_casa' 
-                    value={numCasa} 
-                    maxLength={5}
-                    onChange={(e) => {setNumCasa(e.target.value)}}>
-                  </input>
-                </div>
-
-                <div className={styles.div_input} id={styles.inptspan}>
-                  <label for="cep">CEP:</label>
-                  <IMaskInput
-                    mask="00000-000"
-                    id='cep' 
-                    name='cep' 
-                    value={cep}
-                    onAccept={(value) => setCep(value)}
-                  />
-                </div>
-
-                <div className={styles.div_input} id={styles.inptspan}>
-                  <label for="rua">Rua:</label>
-                  <input 
-                    type='text' 
-                    id='rua' 
-                    name='rua' 
-                    value={rua} 
-                    maxLength={100}
-                    onChange={(e) => {setRua(e.target.value)}}>
-                  </input>
-                </div>
-
-                <div className={styles.div_input}>
+                <div className={stylesModule.div_input}>
                   <label for="logadouro">Logadouro:</label>
                   <select id='logadouro' name='logadouro' value={logadouro} onChange={(e) => {setLogadouro(e.target.value)}}>
                     <option disabled={true} value="">Selecione</option>
@@ -1282,8 +721,8 @@ function Registro() {
                 </div>
               </div>
 
-              <div className={styles.form_group}>
-                <div className={styles.div_input}>
+              <div className={stylesModule.form_group}>
+                <div className={stylesModule.div_input}>
                   <label for='estadoSelecionado'>Estado:</label>
                   <select id="estadoSelecionado" name='estadoSelecionado' value={estadoSelecionado} onChange={handleEstados}>
                     <option value="" disabled>Selecione</option>
@@ -1293,7 +732,7 @@ function Registro() {
                   </select>
                 </div>
 
-                <div className={styles.div_input}>
+                <div className={stylesModule.div_input}>
                   <label for="cidadeSelecionada">Cidade</label>
                   <select id="cidadeSelecionada" name='cidadeSelecionada' value={cidadeSelecionada} onChange={handleCidade}>
                     <option value="" disabled>Selecione</option>
@@ -1305,61 +744,15 @@ function Registro() {
               </div>
             </form>
 
-            {/***TODO: INPUT DADOS BANCÁRIOS***/}
-             <form className={styles.form_dados_bancarios} autoComplete='off' method='post' encType='multipart/form-data'>
-                <div className={styles.divisoria} id={styles.divis_docs}>
-                  <hr></hr>
-                  <span className={styles.title_divis}>Dados Bancários</span>
-                </div>
-
-                <div className={styles.form_group}>
-                  <div className={styles.div_input} id={styles.inptspan}>
-                    <label for="banco">Banco:</label>
-                    <input
-                      type='text' 
-                      id='banco' 
-                      name='banco' 
-                      value={banco} 
-                      maxLength={80}
-                      onChange={(e) => {setBanco(e.target.value)}}>
-                    </input>
-                  </div>
-
-                <div className={styles.div_input} id={styles.inptspan}>
-                  <label for="banco_agencia">Agência:</label>
-                  <input 
-                    type='text' 
-                    id='banco_agencia' 
-                    name='banco_agencia' 
-                    value={bancoAgencia} 
-                    maxLength={9}
-                    onChange={(e) => {setBancoAgencia(e.target.value)}}>
-                  </input>
-                </div>
-
-                <div className={styles.div_input} id={styles.inptspan}>
-                  <label for="banco_conta">Conta:</label>
-                  <input 
-                    type='text' 
-                    id='banco_conta' 
-                    name='banco_conta' 
-                    value={bancoConta} 
-                    maxLength={20}
-                    onChange={(e) => {setBancoConta(e.target.value)}}>
-                  </input>
-                </div>
-              </div>
-            </form>
-
             {/***TODO: INPUT DADOS ESCOLARES***/}
-            <form className={styles.form_dados_escolares} autoComplete='off' method='post' encType='multipart/form-data'>
-              <div className={styles.divisoria} id={styles.divis_docs}>
+            <form className="form_dados_escolares" autoComplete='off' method='post' encType='multipart/form-data'>
+              <div className={stylesModule.divisoria} id={stylesModule.divis_docs}>
                 <hr></hr>
-                <span className={styles.title_divis}>Formação Escolar</span>
+                <span className={stylesModule.title_divis}>Formação Escolar</span>
               </div>
 
-              <div className={styles.form_group}>
-                <div className={styles.div_input}>
+              <div className={stylesModule.form_group}>
+                <div className={stylesModule.div_input}>
                   <label for="escolaridade">Escolaridade:</label>
                   <select id='escolaridade' name='escolaridade' value={escolaridade} onChange={(e) => {setEscolaridade(e.target.value)}}>
                     <option disabled={true} value="">Selecione</option>
@@ -1376,7 +769,7 @@ function Registro() {
                   </select>
                 </div>
 
-                <div className={styles.div_input}>
+                <div className={stylesModule.div_input}>
                   <label for="cursos">Cursos:</label>
                   <select id='cursos' name='cursos' value={cursos} onChange={(e) => {setCursos(e.target.value)}}>
                     <option disabled={true} value="">Selecione</option>
@@ -1389,7 +782,7 @@ function Registro() {
                   </select>
                 </div>
 
-                <div className={`${styles.div_input} ${cursos === "" || cursos === "0" ? styles.disabled : ""}`} id={styles.inptspan}>
+                <div className={`${stylesModule.div_input} ${cursos === "" || cursos === "0" ? stylesModule.disabled : ""}`} id={stylesModule.inptspan}>
                   <label for="curso1">Curso 1:</label>
                   <input 
                     type='text' 
@@ -1397,14 +790,14 @@ function Registro() {
                     name='curso1' 
                     value={curso1} 
                     maxLength={100}
-                    disabled={cursos === "" || cursos === "0" ? styles.disabled : ""}
+                    disabled={cursos === "" || cursos === "0" ? stylesModule.disabled : ""}
                     onChange={(e) => {setCurso1(e.target.value)}}>
                   </input> 
                 </div>
               </div>
 
-              <div className={styles.form_group}>
-                <div className={`${styles.div_input} ${cursos === "" || cursos === "0" || cursos === "1" ? styles.disabled : ""}`} id={styles.inptspan}>
+              <div className={stylesModule.form_group}>
+                <div className={`${stylesModule.div_input} ${cursos === "" || cursos === "0" || cursos === "1" ? stylesModule.disabled : ""}`} id={stylesModule.inptspan}>
                   <label for="curso2">Curso 2:</label>
                   <input 
                     type='text' 
@@ -1412,12 +805,12 @@ function Registro() {
                     name='curso2' 
                     value={curso2} 
                     maxLength={100}
-                    disabled={cursos === "" || cursos === "0" || cursos === "1" ? styles.disabled : ""}
+                    disabled={cursos === "" || cursos === "0" || cursos === "1" ? stylesModule.disabled : ""}
                     onChange={(e) => {setCurso2(e.target.value)}}>
                   </input>
                 </div>
 
-                <div className={`${styles.div_input} ${cursos === "" || cursos === "0" || cursos === "1" || cursos === "2" ? styles.disabled : ""}`} id={styles.inptspan}>
+                <div className={`${stylesModule.div_input} ${cursos === "" || cursos === "0" || cursos === "1" || cursos === "2" ? stylesModule.disabled : ""}`} id={stylesModule.inptspan}>
                   <label for="curso3">Curso 3:</label>
                   <input 
                     type='text' 
@@ -1425,14 +818,14 @@ function Registro() {
                     name='curso3' 
                     value={curso3} 
                     maxLength={100}
-                    disabled={cursos === "" || cursos === "0" || cursos === "1" || cursos === "2" ? styles.disabled : ""}
+                    disabled={cursos === "" || cursos === "0" || cursos === "1" || cursos === "2" ? stylesModule.disabled : ""}
                     onChange={(e) => {setCurso3(e.target.value)}}>
                   </input>
                 </div>
               </div>
 
-              <div className={`${styles.div_input} ${cursos === "" || cursos === "0" || cursos === "1" || cursos === "2" || cursos === "3" ? styles.disabled : ""}`}>
-                <div className={styles.div_input}>
+              <div className={`${stylesModule.div_input} ${cursos === "" || cursos === "0" || cursos === "1" || cursos === "2" || cursos === "3" ? stylesModule.disabled : ""}`}>
+                <div className={stylesModule.div_input}>
                   <label for="curso4">Curso 4:</label>
                   <input 
                     type='text' 
@@ -1440,185 +833,63 @@ function Registro() {
                     name='curso4' 
                     value={curso4} 
                     maxLength={100}
-                    disabled={cursos === "" || cursos === "0" || cursos === "1" || cursos === "2" || cursos === "3" ? styles.disabled : ""}
+                    disabled={cursos === "" || cursos === "0" || cursos === "1" || cursos === "2" || cursos === "3" ? stylesModule.disabled : ""}
                     onChange={(e) => {setCurso4(e.target.value)}}>
                   </input>
                 </div>
               </div>
             </form>
 
-
-            {/***TODO: INPUT DADOS VÍNCULO***/}
-            <form className={styles.form_dados_vinculo} autoComplete='off' method='post' encType='multipart/form-data'>
-              <div className={styles.divisoria} id={styles.divis_docs}>
+            {/***TODO: INPUT DADOS VINCULO***/}
+            <form className="form_dados_escolares" autoComplete='off' method='post' encType='multipart/form-data'>
+              <div className={stylesModule.divisoria} id={stylesModule.divis_docs}>
                 <hr></hr>
-                <span className={styles.title_divis}>Vínculo</span>
+                <span className={stylesModule.title_divis}>Dados Vínculo</span>
               </div>
 
-              <div className={styles.form_group}>
-                <div className={styles.div_input}>
-                  <label for="vinculo">Vínculo:</label>
-                  <select id='vinculo' name='vinculo' value={vinculo} onChange={(e) => {setVinculo(e.target.value)}}>
+
+              <div className={stylesModule.form_group}>
+                <div className={stylesModule.div_input} id={stylesModule.inptspan}>
+                  <label for="funcao">Função:</label>
+                  <input 
+                    type='text' 
+                    id='funcao' 
+                    name='funcao' 
+                    value={funcao} 
+                    maxLength={100}
+                    onChange={(e) => {setFuncao(e.target.value)}}>
+                  </input>
+                </div>
+
+                <div className={stylesModule.div_input} id={stylesModule.inptspan}>
+                  <label for="contrato">Contrato:</label>
+                  <select id='contrato' name='contrato' value={contrato} onChange={(e) => {setContrato(e.target.value)}}>
                     <option disabled={true} value="">Selecione</option>
-                    <option value="Cargo Comissionado">Cargo Comissionado</option>
-                    <option value="Estagiário(a)">Estagiário(a)</option>
+                    <option value="Estagiário">Estagiário</option>
+                    <option value="Contratado">Contratado</option>
                     <option value="Temporário">Temporário</option>
-                    <option value="Efetivo">Efetivo</option>
-                    <option value="Outros">Outros</option>
                   </select>
                 </div>
-
-                <div className={styles.div_input}>
-                  <label for="setorDepartamento">Setor/Departamento:</label>
-                  <select id='setorDepartamento' name='setorDepartamento' value={setorDepartamento} onChange={(e) => {setSetorDepartamento(e.target.value)}}>
-                    <option disabled={true} value="">Selecione</option>
-                    <option value="Apoio Administrativo">Apoio Administrativo</option>
-                    <option value="Transporte">Transporte</option>
-                    <option value="Gabinete">Gabinete</option>
-                    <option value="Gerência de Análise">Gerência de Análise</option>
-                    <option value="Gerência de Operações">Gerência de Operações</option>
-                    <option value="Gerência de Contra Inteligência">Gerência de Contra Inteligência</option>
-                    <option value="Laboratório">Laboratório</option>
-                    <option value="Inteligência Cibernética">Inteligência Cibernética</option>
-                    <option value="Outros">Outros</option>
-                    <option value="NI">NI</option>
-                  </select>
-                </div>
-
-                <div className={styles.div_input} id={styles.inptspan}>
-                  <label for="cargoFuncao">Cargo/Função:</label>
-                  <input 
-                    type='text' 
-                    id='cargoFuncao' 
-                    name='cargoFuncao' 
-                    value={cargoFuncao} 
-                    maxLength={30}
-                    onChange={(e) => {setCargoFuncao(e.target.value)}}>
-                  </input>
-                </div>
               </div>
 
-              <div className={styles.form_group}>
-                <div className={styles.div_input} id={styles.inptspan}>
-                  <label for="cargoEfetivo">Cargo Efetivo:</label>
-                  <input 
-                    type='text' 
-                    id='cargoEfetivo' 
-                    name='cargoEfetivo' 
-                    value={cargoEfetivo} 
-                    maxLength={30}
-                    onChange={(e) => {setCargoEfetivo(e.target.value)}}>
-                  </input>
-                </div>
-                  
-                <div className={styles.div_input}>
-                  <label for="status">Status:</label>
-                  <select id='status' name='status' value={statusServidor} onChange={(e) => {setStatusServidor(e.target.value)}}>
-                    <option disabled={true} value="">Selecione</option>
-                    <option value="Ativo">Ativo</option>
-                    <option value="Desligado">Desligado</option>
-                  </select>
-                </div>
-
-                <div className={styles.div_input} id={styles.inptspan}>
-                  <label for="matriculaOrigem">Matricula Origem:</label>
-                  <input 
-                    type='text' 
-                    id='matriculaOrigem' 
-                    name='matriculaOrigem' 
-                    value={matriculaOrigem} 
-                    maxLength={15}
-                    onChange={(e) => {setMatriculaOrigem(e.target.value)}}>
-                  </input>
-                </div>
-              </div>
-
-              <div className={styles.form_group}>
-                <div className={styles.div_input} id={styles.inptspan}>
-                  <label for="orgaoOrigem">Orgão Origem:</label>
-                  <input 
-                    type='text' 
-                    id='orgaoOrigem' 
-                    name='orgaoOrigem' 
-                    value={orgaoOrigem} 
-                    maxLength={50}
-                    onChange={(e) => {setOrgaoOrigem(e.target.value)}}>
-                  </input>
-                </div>
-
-                <div className={styles.div_input} id={styles.inptspan}>
-                  <label for="matriculaSeai">Matricula SEAI:</label>
-                  <input 
-                    type='text' 
-                    id='matriculaSeai' 
-                    name='matriculaSeai' 
-                    value={matriculaSeai} 
-                    maxLength={15}
-                    onChange={(e) => {setMatriculaSeai(e.target.value)}}>
-                  </input>
-                </div>
-              </div>
-                  
-              <div className={styles.form_group}>
-                <div className={styles.div_input} id={styles.data_docs}>
-                  <label for="dataEntregaDocs">Data de entrega dos documentos:</label>
-                  <input 
-                    type='date' 
-                    id='dataEntregaDocs' 
-                    name='dataEntregaDocs' 
-                    value={dataEntregaDocs} 
-                    onChange={(e) => {setDataEntregaDocs(e.target.value)}}>
-                  </input>
-                </div>
-              </div>
-
-              <div className={styles.form_group}>
-                <div className={styles.div_input} id={styles.anexoss}>
-                  <label for="nome_anexos">Anexos:</label>
+              <div className={stylesModule.form_group}>
+                <div className={stylesModule.div_input} id={stylesModule.inptspan}>
+                  <label for="setor">Setor:</label>
                   <input
-                    name='pdfs'
-                    id={styles.input_files}
-                    type='file'
-                    accept='application/pdf'
-                    multiple
-                    onChange={handleFileChange}
-                    ref={fileInputRhef}
-                    >
-                  </input>
-
-                  <div className={styles.name_file2}>
-                    {files.length > 0 &&(
-                      <ul>
-                        {files.map((file, index) =>(
-                          <li key={index}>{file.name}</li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
-
+                    type='text'
+                    id='setor'
+                    name='setor'
+                    value={setor}
+                    maxLength={100}
+                    onChange={(e) => {setSetor(e.target.value)}}
+                  />
                 </div>
-
-                <div className={styles.div_input} id={styles.anotacoes}>
-                  <label for="anotacoes">Anotações:</label>
-                  <textarea 
-                    className={styles.input_anotacoes} 
-                    type='text' 
-                    id='anotacoes' 
-                    name='anotacoes' 
-                    value={anotacoes} 
-                    onChange={(e) => {setAnotacoes(e.target.value)}}>
-                  </textarea>
-                </div>
-              </div>
-
-              <div className={styles.form_group} id={styles.anotacoes}>
               </div>
             </form>
 
-            <button className={styles.clear_files} onClick={clearFiles}>Limpar</button>
           </div>
         </div>
-        <button onClick={submitForm} className={styles.button_send}>Salvar</button>
+        <button onClick={submitForm} className="button_send">Salvar</button>
       </div>
 
       {/***TODO: MODALS***/}

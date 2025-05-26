@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import styles from '../pages/styles.module.css'
+import styles from '../pages/stylesModule.module.css'
 import { Link } from 'react-router-dom'
 import { jsPDF } from 'jspdf'
 
@@ -137,8 +137,7 @@ const Person = ({ funcionario, handleOpenDeleteModal }) => {
 
         doc.setFontSize(10)
         doc.setFont("helvetica", "bold");
-        doc.text(`SECRETARIA DE ESTADO DE SEGURANÇA PÚBLICA \n SECRETARIA EXECUTIVA ADJUNTA DE INTELIGÊNCIA`, 105, 48, { align: "center" })
-        doc.text(`FICHA CADASTRAL DE SERVIDORES`, 105, 59, { align: "center" })
+        doc.text(`FICHA CADASTRAL DE FUNCIONARIO`, 105, 59, { align: "center" })
 
       //  
         // Adicionar ao PDF no tamanho desejado (convertendo para uma escala normal
@@ -184,25 +183,6 @@ const Person = ({ funcionario, handleOpenDeleteModal }) => {
 
       //
 
-        doc.setFont("helvetica", "bold");
-        doc.text(`3 - DOCUMENTOS`, 29, 192, { align: "center" })
-        doc.line(49, 190.5, 195, 190.5)
-
-        doc.setFont("helvetica", "normal");
-        doc.text(`CPF: ${funcionario.cpf}`, 12, 199)
-        doc.text(`PIS/PASEP: ${funcionario.pisPasep}`, 70, 199)
-        doc.text(`CNH: ${funcionario.cnh}`, 140, 199)
-        doc.text(`RG: ${funcionario.rg}`, 12, 204.5)
-        doc.text(`DATA EXPED.: ${formatedDataExped}`, 60, 204.5)
-        doc.text(`ORGÃO EXPED.: ${funcionario.rgOrgaoExped}`, 120, 204.5)
-        doc.text(`UF: ${funcionario.rgUf}`, 180, 204.5)
-        doc.text(`TÍTULO: ${funcionario.titulo}`, 12, 210.5)
-        doc.text(`ZONA: ${funcionario.tituloZona}`, 75, 210.5)
-        doc.text(`SEÇÃO: ${funcionario.tituloSecao}`, 120, 210.5)
-        doc.text(`UF: ${funcionario.tituloUf}`, 180, 210.5)
-        doc.text(`DOC. MILITAR: ${funcionario.docMilitar}`, 12, 216)
-        doc.text(`SÉRIE: ${funcionario.docMilitarSerie}`, 120, 216)
-
       //
 
         doc.setFont("helvetica", "bold");
@@ -212,9 +192,6 @@ const Person = ({ funcionario, handleOpenDeleteModal }) => {
         doc.setFont("helvetica", "normal");
         doc.text(`BAIRRO: ${funcionario.bairro}`, 12, 232)
         doc.text(`LOGADOURO: ${funcionario.logadouro}`, 140, 232)
-        doc.text(`RUA: ${funcionario.rua}`, 12, 237.5)
-        doc.text(`NÚMERO: ${funcionario.numCasa}`, 150, 237.5)
-        doc.text(`CEP: ${funcionario.cep}`, 12, 243.5)
         doc.text(`ESTADO: ${funcionario.estado}`, 140, 243.5)
         doc.text(`CIDADE: ${funcionario.cidade}`, 60, 243.5)
 
@@ -226,14 +203,6 @@ const Person = ({ funcionario, handleOpenDeleteModal }) => {
       //
         doc.addPage()
       //
-        doc.setFont("helvetica", "bold");
-        doc.text(`5 - DADOS BANCÁRIOS`, 34, 48, { align: "center" })
-        doc.line(60, 46.5, 194, 46.5)
-
-        doc.setFont("helvetica", "normal");
-        doc.text(`BANCO: ${funcionario.banco}`, 12, 55)
-        doc.text(`AGÊNCIA: ${funcionario.bancoAgencia}`, 90, 55)
-        doc.text(`CONTA: ${funcionario.bancoConta}`, 140, 55)
 
       //
 
@@ -257,15 +226,7 @@ const Person = ({ funcionario, handleOpenDeleteModal }) => {
 
         doc.setFont("helvetica", "normal");
         doc.text(`VÍNCULO: ${funcionario.vinculo}`, 12, 112)
-        doc.text(`SETOR/DEPARTAMENTO: ${funcionario.setorDepartamento}`, 80, 112)
-        doc.text(`CARGO EFETIVO: ${funcionario.cargoEfetivo}`, 12, 117.5)
-        doc.text(`CARGO/FUNÇÃO: ${funcionario.cargoFuncao}`, 130, 117.5)
-        doc.text(`ORGÃO ORIGEM: ${funcionario.orgaoOrigem}`, 12, 123.5)
-        doc.text(`MATRÍCULA ORIGEM: ${funcionario.matriculaOrigem}`, 130, 123)
-        doc.text(`MATRÍCULA SEAI: ${funcionario.matriculaSeai}`, 12, 129.5)
-        doc.text(`STATUS: ${funcionario.statusServidor}`, 130, 129)
-        doc.text(`DATA DE ENTREGA DOS DOCUMENTOS: ${formatedDataEntregaDocs}`, 12, 135)
-        doc.text(`ANOTAÇÕES: ${funcionario.anotacoes}`, 12, 140.5)
+
 
         doc.addImage(img1, "PNG", -1, 2, 213, 40) //-1 (x), 2(y), 213(width), 40(heigth) 
 

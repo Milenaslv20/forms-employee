@@ -74,9 +74,9 @@ app.use('/uploads', express.static(uploadDirectory))
 const db = mysql.createConnection({
     host: "localhost",
     user: "dev",
-    password: "123456",
-    database: "seaifuncionarios",
-    port: "3307"
+    password: "490824miM",
+    database: "novo",
+    port: "3306"
 });
 db.connect((err) => {
     if (err) {
@@ -92,11 +92,8 @@ app.post("/cadastrar", (req, res) =>{
     console.log("Body recebido:", req.body);
     const { nome, sexo, data_nasc, estadoAtual, nacionalidade, naturalidade, raca, telefone, email, 
         nomePai, cpfPai, dataNascPai, nomeMae, cpfMae, dataNascMae, estadoCivil, nomeEsposoa, filhos, nomeFilhos,
-        cpf, pisPasep, cnh, rg, rgDataExped, rgOrgaoExped, rgUf, titulo, tituloZona, tituloSecao, tituloUf, docMilitar, docMilitarSerie,
         bairro, numCasa, cep, rua, logadouro, estadoSelecionado, cidadeSelecionada,
-        banco, bancoAgencia, bancoConta,
         escolaridade, cursos, curso1, curso2, curso3, curso4,
-        vinculo, setorDepartamento, cargoFuncao, cargoEfetivo, statusServidor, matriculaOrigem, orgaoOrigem, matriculaSeai, dataEntregaDocs, anotacoes
     } = req.body;
 
     db.beginTransaction((err) =>{
@@ -140,17 +137,6 @@ app.post("/cadastrar", (req, res) =>{
                     console.log("-Dados familiares cadastrados com sucesso");
                 }
 
-                let sqlDocumentos = "INSERT INTO dadosdocumentos(idFuncionario, cpf, pisPasep, cnh, rg, rgDataExped, rgOrgaoExped, rgUf, titulo, tituloZona, tituloSecao, tituloUf, docMilitar, docMilitarSerie) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-                db.query(sqlDocumentos, [idFuncionario, cpf, pisPasep, cnh, rg, rgDataExped, rgOrgaoExped, rgUf, titulo, tituloZona, tituloSecao, tituloUf, docMilitar, docMilitarSerie], (err, result) =>{
-                    if (err) {
-                        return db.rollback(() =>{
-                            console.log("Erro ao cadastrar dados documentos:", err);
-                            result.status(500).send("Erro ao cadastrar dados documentos");
-                        })
-                    } else{
-                        console.log("-Dados documentos cadastrados com sucesso");
-                    }
-
                     let sqlEndereco = "INSERT INTO dadosendereco(idFuncionario, bairro, numCasa, cep, rua, logadouro, estado, cidade) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
                     db.query(sqlEndereco, [idFuncionario, bairro, numCasa, cep, rua, logadouro, estadoSelecionado, cidadeSelecionada], (err, result) =>{
                         if (err) {
@@ -162,17 +148,6 @@ app.post("/cadastrar", (req, res) =>{
                             console.log("-Dados endereço cadastrados com sucesso");
                         }
 
-                        let sqlDadosBancarios = "INSERT INTO dadosbancarios(idFuncionario, banco, bancoAgencia, bancoConta) VALUES (?, ?, ?, ?)";
-                        db.query(sqlDadosBancarios, [idFuncionario, banco, bancoAgencia, bancoConta], (err, result) =>{
-                            if (err) {
-                                return db.rollback(() =>{
-                                    console.log("Erro ao cadastrar dados bancários:", err);
-                                    result.status(500).send("Erro ao cadastrar dados bancários");
-                                })
-                            } else{
-                                console.log("-Dados bancários cadastrados com sucesso");
-                            }
-
                             let sqlformacaoEscolar = "INSERT INTO dadosescolaridade(idFuncionario, escolaridade, cursos, curso1, curso2, curso3, curso4) VALUES (?, ?, ?, ?, ?, ?, ?)";
                             db.query(sqlformacaoEscolar, [idFuncionario, escolaridade, cursos, curso1, curso2, curso3, curso4], (err, result) =>{
                                 if (err) {
@@ -183,18 +158,6 @@ app.post("/cadastrar", (req, res) =>{
                                 } else{
                                     console.log("-Dados escolares cadastrados com sucesso");
                                 }
-
-                                let sqlVinculo = "INSERT INTO dadosvinculo(idFuncionario, vinculo, setorDepartamento, cargoFuncao, cargoEfetivo, statusServidor, matriculaOrigem, orgaoOrigem, matriculaSeai, dataEntregaDocs, anotacoes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-                                db.query(sqlVinculo, [idFuncionario, vinculo, setorDepartamento, cargoFuncao, cargoEfetivo, statusServidor, matriculaOrigem, orgaoOrigem, matriculaSeai, dataEntregaDocs, anotacoes], (err, result) =>{
-                                    if (err) {
-                                        return db.rollback(() =>{
-                                            console.log("Erro ao cadastrar dados vínculo:", err);
-                                            result.status(500).send("Erro ao cadastrar dados vínculo");
-                                        })
-                                    } else{
-                                        console.log("-Dados vínculo cadastrados com sucesso\n");
-                                    }
-                                })
 
                                 db.commit((err) => {
                                     if (err) {
@@ -208,40 +171,12 @@ app.post("/cadastrar", (req, res) =>{
                                     res.status(200).json({ idFuncionario: idFuncionario })
                                 });
                             });
-                        });
                     });
-                });
             });
         });
     });
 });
 
-/*
-app.post("/uploads", upload.fields([{ name: 'imagem' }, { name: 'pdfs', maxCount: 50 }]), (req, res) =>{
-    const { idFuncionario } = req.body
-    const nome = req.body.nomeFuncionario || req.body.nome;
-
-    const pasta = path.join('uploads', nome);
-
-    const imagemPath = path.join(pasta, req.files['imagem'][0].filename);
-    const pdfsPath = req.files['pdfs'].map(file => path.join(pasta, file.filename));
-    const originalNames = req.files['pdfs'].map(file => file.originalname);
-  
-    const query = "INSERT INTO documentos (idFuncionario, originalFileNames, filePath, imagePath) VALUES (?, ?, ?, ?)";
-    db.query(query, [
-      idFuncionario,
-      JSON.stringify(originalNames),
-      JSON.stringify(pdfsPath),
-      imagemPath
-    ], (err, result) => {
-      if (err) {
-        console.error("Erro ao salvar documentos:", err);
-        return res.status(500).json({ message: 'Erro ao salvar no banco de dados', error: err });
-      }
-      res.status(200).json({ message: 'Arquivos enviados e salvos no banco de dados', result });
-    });
-});
-*/
 
 app.post("/uploads", upload.fields([{ name: 'imagem' }, { name: 'pdfs', maxCount: 50 }]), (req, res) =>{
     const { idFuncionario } = req.body
@@ -267,38 +202,6 @@ app.post("/uploads", upload.fields([{ name: 'imagem' }, { name: 'pdfs', maxCount
     });
 })
 
-app.post("/cadastrarUsuario", (req, res) =>{
-    console.log("Body recebido:", req.body);
-    const { nomeUsuario, senhaUsuario, tipoAcesso, } = req.body;
-
-    db.beginTransaction((err) =>{
-        if(err){
-            console.log("erro ao iniciar transação")
-        }
-    })
-
-    let sqlUsuarios = "INSERT INTO usuarios(nomeUsuario, senhaUsuario, tipoAcesso) VALUES (?, ?, ?)";
-    db.query(sqlUsuarios, [nomeUsuario, senhaUsuario, tipoAcesso], (err, result) =>{
-        if (err) {
-            return db.rollback(() =>{
-                console.log("Erro ao cadastrar usuário:", err);
-                res.status(500).send("Erro ao cadastrar usuArio");
-            })
-        }
-
-        db.commit((err) => {
-            if (err) {
-                return db.rollback(() => {
-                    console.error("Erro ao finalizar a transação:", err);
-                    res.status(500).send("Erro ao finalizar a transação.");
-                });
-            }
-            console.log("✔ Usuário cadastrado com sucesso ✔\n");
-            //res.status(200).send("Cadastro realizado com sucesso");
-            res.status(200).json({ message: 'Usuário cadastrado com sucesso', result })
-        });
-    })
-})
 
 //TODO: READ
 app.get("/getRegisters", (req, res) =>{
@@ -390,17 +293,6 @@ app.get("/getRegisters", (req, res) =>{
     })
 })
 
-app.get('/getFiles/:idFuncionario', (req, res) =>{
-    const idFuncionario = req.params.idFuncionario
-
-    const query = 'SELECT filePath, originalFileNames FROM documentos WHERE idFuncionario = ?'
-    db.query(query, [idFuncionario], (err, result) =>{
-        if(err){
-            return res.status(500).json({ message: 'Erro ao recuperar arquivos', error: err })
-        }
-        res.json(result)
-    })
-})
 
 app.get('/getImage/:idFuncionario', (req, res) =>{
     const idFuncionario = req.params.idFuncionario
@@ -447,33 +339,6 @@ app.post("/existenciaUsuario", (req, res) =>{
     })
 })
 
-app.get("/getLogsLogin", (req, res) =>{
-    const dbLogsLogin = `
-    SELECT nomeUsuario, DATE_FORMAT(dataLogin,'%e/%m/%y') AS dataLogin, TIME_FORMAT(horaLogin, '%H:%i:%s') AS horaLogin FROM logslogin;
-    `
-
-    db.query(dbLogsLogin, (err, result) =>{
-        if (err) {
-            return res.status(500).json({ error: 'Erro ao consultar logs de login' });
-        }
-
-        return res.json(result)
-    })
-})
-
-app.get("/getLogsEdit", (req, res) =>{
-    const dbLogsEdit = `
-    SELECT nomeUsuario, DATE_FORMAT(dataEdit,'%e/%m/%y') AS dataEdit, registroEditado, TIME_FORMAT(horaEdit, '%H:%i:%s') AS horaEdit FROM logsedicao;
-    `
-
-    db.query(dbLogsEdit, (err, response) =>{
-        if (err) {
-            return res.status(500).json({ error: 'Erro ao consultar logs de edição' });
-        }
-
-        return res.json(response)
-    })
-})
 
 app.post("/validateUser", (req, res) =>{
     const { usuario, senha } = req.body
@@ -499,11 +364,8 @@ app.post("/editRegister", upload.none(), (req, res) =>{
     console.log("Body recebido:", req.body);
     const { idFuncionario, nomeFuncionario, sexo, dataNasc, estadoAtual, nacionalidade, naturalidade, raca, telefone, email, 
         nomePai, cpfPai, dataNascPai, nomeMae, cpfMae, dataNascMae, estadoCivil, nomeEsposoa, filhos, nomeFilhos,
-        cpf, pisPasep, cnh, rg, rgDataExped, rgOrgaoExped, rgUf, titulo, tituloZona, tituloSecao, tituloUf, docMilitar, docMilitarSerie,
         bairro, numCasa, cep, rua, logadouro, estadoSelecionado, cidadeSelecionada,
-        banco, bancoAgencia, bancoConta,
         escolaridade, cursos, curso1, curso2, curso3, curso4,
-        vinculo, setorDepartamento, cargoFuncao, cargoEfetivo, statusServidor, matriculaOrigem, orgaoOrigem, matriculaSeai, dataEntregaDocs, anotacoes
     } = req.body;
 
     
@@ -549,17 +411,6 @@ app.post("/editRegister", upload.none(), (req, res) =>{
                     console.log("-Dados familiares editados com sucesso");
                 }
 
-                let sqlDocumentos = "UPDATE dadosdocumentos SET cpf = ?, pisPasep = ?, cnh = ?, rg = ?, rgDataExped = ?, rgOrgaoExped = ?, rgUf = ?, titulo = ?, tituloZona = ?, tituloSecao = ?, tituloUf = ?, docMilitar = ?, docMilitarSerie = ? WHERE idFuncionario = ?";
-                db.query(sqlDocumentos, [cpf, pisPasep, cnh, rg, rgDataExped, rgOrgaoExped, rgUf, titulo, tituloZona, tituloSecao, tituloUf, docMilitar, docMilitarSerie, idFuncionario], (err, result) =>{
-                    if (err) {
-                        return db.rollback(() =>{
-                            console.log("Erro ao atualizar dados documentos:", err);
-                            result.status(500).send("Erro ao atualizar dados documentos");
-                        })
-                    } else{
-                        console.log("-Dados documentos editados com sucesso");
-                    }
-
                     let sqlEndereco = "UPDATE dadosendereco SET bairro = ?, numCasa = ?, cep = ?, rua = ?, logadouro = ?, estado = ?, cidade = ? WHERE idFuncionario = ?";
                     db.query(sqlEndereco, [bairro, numCasa, cep, rua, logadouro, estadoSelecionado, cidadeSelecionada, idFuncionario], (err, result) =>{
                         if (err) {
@@ -571,17 +422,6 @@ app.post("/editRegister", upload.none(), (req, res) =>{
                             console.log("-Dados endereço editados com sucesso");
                         }
 
-                        let sqlDadosBancarios = "UPDATE dadosbancarios SET banco = ?, bancoAgencia = ?, bancoConta = ? WHERE idFuncionario = ?";
-                        db.query(sqlDadosBancarios, [banco, bancoAgencia, bancoConta, idFuncionario], (err, result) =>{
-                            if (err) {
-                                return db.rollback(() =>{
-                                    console.log("Erro ao atualizar dados bancários:", err);
-                                    result.status(500).send("Erro ao atualizar dados bancários");
-                                })
-                            } else{
-                                console.log("-Dados bancários editados com sucesso");
-                            }
-
                             let sqlformacaoEscolar = "UPDATE dadosescolaridade SET escolaridade = ?, cursos = ?, curso1 = ?, curso2 = ?, curso3 = ?, curso4 = ? WHERE idFuncionario = ?";
                             db.query(sqlformacaoEscolar, [escolaridade, cursos, curso1, curso2, curso3, curso4, idFuncionario], (err, result) =>{
                                 if (err) {
@@ -592,18 +432,6 @@ app.post("/editRegister", upload.none(), (req, res) =>{
                                 } else{
                                     console.log("-Dados escolares editados com sucesso");
                                 }
-
-                                let sqlVinculo = "UPDATE dadosvinculo SET vinculo = ?, setorDepartamento = ?, cargoFuncao = ?, cargoEfetivo = ?, statusServidor = ?, matriculaOrigem = ?, orgaoOrigem = ?, matriculaSeai = ?, dataEntregaDocs = ?, anotacoes = ? WHERE idFuncionario = ?";
-                                db.query(sqlVinculo, [vinculo, setorDepartamento, cargoFuncao, cargoEfetivo, statusServidor, matriculaOrigem, orgaoOrigem, matriculaSeai, dataEntregaDocs, anotacoes, idFuncionario], (err, result) =>{
-                                    if (err) {
-                                        return db.rollback(() =>{
-                                            console.log("Erro ao atualizar dados vínculo:", err);
-                                            result.status(500).send("Erro ao atualizar dados vínculo");
-                                        })
-                                    } else{
-                                        console.log("-Dados vínculo editados com sucesso\n");
-                                    }
-                                })
 
                                 db.commit((err) => {
                                     if (err) {
@@ -617,9 +445,7 @@ app.post("/editRegister", upload.none(), (req, res) =>{
                                     res.status(200).json({ idFuncionario: idFuncionario })
                                 });
                             });
-                        });
                     });
-                });
             });
         });
     });
@@ -785,44 +611,6 @@ app.post("/uploadsEdit", upload.fields([{ name: 'imagem' }, { name: 'pdfs', maxC
       return res.status(500).json({ message: 'Erro no servidor', error: err });
     }
   });
-
-
-
-app.post("/logEdicao", (req, res) =>{
-    const date = new Date()
-    const hour = date.toLocaleTimeString()
-    const { nomeUsuario, nomeFuncionario } = req.body;
-
-    const dataMySQL = date.toISOString().split('T')[0];
-
-    db.beginTransaction((err) =>{
-        if(err){
-            console.log("erro ao iniciar transação")
-        }
-    })
-
-    let sqlLogEdicao = "INSERT INTO logsedicao(nomeUsuario, registroEditado, dataEdit, horaEdit) VALUES (?, ?, ?, ?)";
-    db.query(sqlLogEdicao, [nomeUsuario, nomeFuncionario, dataMySQL, hour], (err, result) =>{
-        if (err) {
-            return db.rollback(() =>{
-                console.log("Erro ao cadastrar log de edição:", err);
-                res.status(500).send("Erro ao cadastrar log de edição");
-            })
-        }
-
-        db.commit((err) => {
-            if (err) {
-                return db.rollback(() => {
-                    console.error("Erro ao finalizar a transação:", err);
-                    res.status(500).send("Erro ao finalizar a transação.");
-                });
-            }
-            console.log("✔ Log edição cadastrado com sucesso ✔\n");
-            //res.status(200).send("Cadastro realizado com sucesso");
-            res.status(200).json({ message: 'Log edição cadastrado com sucesso', result })
-        });
-    })
-})
 
 
 //TODO: DELETE

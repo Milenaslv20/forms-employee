@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-import styles from './styles.module.css'
+import styles from './stylesModule.module.css'
 import Axios from 'axios'
 import { useFuncionario } from './FuncionarioContext'
 import { IMaskInput } from 'react-imask';
@@ -60,31 +60,10 @@ const Editar = () =>{
     filhos: funcionario.filhos,
     nomeFilhos: funcionario.nomeFilhos,
 
-    cpf: funcionario.cpf,
-    pisPasep: funcionario.pisPasep,
-    cnh: funcionario.cnh,
-    rg: funcionario.rg,
-    rgDataExped: funcionario.rgDataExped,
-    rgOrgaoExped: funcionario.rgOrgaoExped,
-    rgUf: funcionario.rgUf,
-    titulo: funcionario.titulo,
-    tituloZona: funcionario.tituloZona,
-    tituloSecao: funcionario.tituloSecao,
-    tituloUf: funcionario.tituloUf,
-    docMilitar: funcionario.docMilitar,
-    docMilitarSerie: funcionario.docMilitarSerie,
-
     bairro: funcionario.bairro,
-    numCasa: funcionario.numCasa,
-    cep: funcionario.cep,
-    rua: funcionario.rua,
     logadouro: funcionario.logadouro,
     estadoSelecionado: funcionario.estado,
     cidadeSelecionada: funcionario.cidade,
-
-    banco: funcionario.banco,
-    bancoAgencia: funcionario.bancoAgencia,
-    bancoConta: funcionario.bancoConta,
 
     escolaridade: funcionario.escolaridade,
     cursos: funcionario.cursos,
@@ -93,16 +72,7 @@ const Editar = () =>{
     curso3: funcionario.curso3,
     curso4: funcionario.curso4,
 
-    vinculo: funcionario.vinculo,
-    setorDepartamento: funcionario.setorDepartamento,
-    cargoFuncao: funcionario.cargoFuncao,
-    cargoEfetivo: funcionario.cargoEfetivo,
-    statusServidor: funcionario.statusServidor,
-    matriculaOrigem: funcionario.matriculaOrigem,
-    orgaoOrigem: funcionario.orgaoOrigem,
-    matriculaSeai: funcionario.matriculaSeai,
-    dataEntregaDocs: funcionario.dataEntregaDocs,
-    anotacoes: funcionario.anotacoes,
+
 
     filePath: funcionario.filePath,
     image: funcionario.imageUrl
@@ -156,31 +126,10 @@ const Editar = () =>{
         filhos: funcionario.filhos,
         nomeFilhos: funcionario.nomeFilhos,
 
-        cpf: funcionario.cpf,
-        pisPasep: funcionario.pisPasep,
-        cnh: funcionario.cnh,
-        rg: funcionario.rg,
-        rgDataExped: formatedrgDataExped,
-        rgOrgaoExped: funcionario.rgOrgaoExped,
-        rgUf: funcionario.rgUf,
-        titulo: funcionario.titulo,
-        tituloZona: funcionario.tituloZona,
-        tituloSecao: funcionario.tituloSecao,
-        tituloUf: funcionario.tituloUf,
-        docMilitar: funcionario.docMilitar,
-        docMilitarSerie: funcionario.docMilitarSerie,
-
         bairro: funcionario.bairro,
-        numCasa: funcionario.numCasa,
-        cep: funcionario.cep,
-        rua: funcionario.rua,
         logadouro: funcionario.logadouro,
         estadoSelecionado: funcionario.estado,
         cidadeSelecionada: funcionario.cidade,
-
-        banco: funcionario.banco,
-        bancoAgencia: funcionario.bancoAgencia,
-        bancoConta: funcionario.bancoConta,
 
         escolaridade: funcionario.escolaridade,
         cursos: funcionario.cursos,
@@ -189,16 +138,7 @@ const Editar = () =>{
         curso3: funcionario.curso3,
         curso4: funcionario.curso4,
 
-        vinculo: funcionario.vinculo,
-        setorDepartamento: funcionario.setorDepartamento,
-        cargoFuncao: funcionario.cargoFuncao,
-        cargoEfetivo: funcionario.cargoEfetivo,
-        statusServidor: funcionario.statusServidor,
-        matriculaOrigem: funcionario.matriculaOrigem,
-        orgaoOrigem: funcionario.orgaoOrigem,
-        matriculaSeai: funcionario.matriculaSeai,
-        dataEntregaDocs: formatedDataEntregaDocs,
-        anotacoes: funcionario.anotacoes
+
       });  // Atualiza os dados caso o funcionario mude
       if (funcionario.estado && estadosCidades[funcionario.estado]) {
         setCidades(estadosCidades[funcionario.estado]);
@@ -340,12 +280,6 @@ const Editar = () =>{
     }
   };
 
-
-  //TODO: INPUT FILES
-  const handleFileChange = (e) =>{
-    const selectedFiles = Array.from(e.target.files);
-    setFiles(selectedFiles);
-  };
 
   //TODO: VALIDATION INPUTS AND SEND TO BACKEND
   const regex = /[0-9!#$%&'"()*+,-./:;?@[\\\]_`{|}~]/
@@ -532,29 +466,6 @@ const Editar = () =>{
       return false;
     }
 
-    if(visData.banco.trim() === ''){
-      setModalMessageError("Preencha o nome do banco")
-      setOpenModalError(true)
-      return false;
-    }
-    if(regex.test(visData.banco) === true){
-      setModalMessageError("Preencha o nome do banco apenas com letras")
-      setOpenModalError(true)
-      return false;
-    }
-
-    if(visData.bancoAgencia.trim() === ''){
-      setModalMessageError("Preencha a agência do banco")
-      setOpenModalError(true)
-      return false;
-    }
-
-    if(visData.bancoConta.trim() === ''){
-      setModalMessageError("Preencha a conta do banco")
-      setOpenModalError(true)
-      return false;
-    }
-
     if(visData.escolaridade.trim() === ''){
       setModalMessageError("Preencha a Escolaridade")
       setOpenModalError(true)
@@ -567,62 +478,9 @@ const Editar = () =>{
       return false;
     }
 
-    if(visData.vinculo.trim() === ''){
-      setModalMessageError("Preencha o Vínculo")
-      setOpenModalError(true)
-      return false;
-    }
-
-    if(visData.setorDepartamento.trim() === ''){
-      setModalMessageError("Preencha o Setor/Departamento")
-      setOpenModalError(true)
-      return false;
-    }
-
-    if(visData.cargoFuncao.trim() === ''){
-      setModalMessageError("Preencha o Cargo/Função")
-      setOpenModalError(true)
-      return false;
-    }
-
-    if(visData.cargoEfetivo.trim() === ''){
-      setModalMessageError("Preencha o Cargo Efetivo")
-      setOpenModalError(true)
-      return false;
-    }
-
-    if(visData.statusServidor.trim() === ''){
-      setModalMessageError("Preencha o Status do servidor")
-      setOpenModalError(true)
-      return false;
-    }
-
-    if(visData.matriculaOrigem.trim() === ''){
-      setModalMessageError("Preencha a Matrícula de Origem")
-      setOpenModalError(true)
-      return false;
-    }
-
-    if(visData.orgaoOrigem.trim() === ''){
-      setModalMessageError("Preencha o Orgão de origem")
-      setOpenModalError(true)
-      return false;
-    }
-
-    if(visData.matriculaSeai.trim() === ''){
-      setModalMessageError("Preencha a Matrícula SEAI")
-      setOpenModalError(true)
-      return false;
-    }
 
     if(visData.cursos.trim() === ''){
       setModalMessageError("Preencha a quantidade de cursos")
-      setOpenModalError(true)
-      return false;
-    }
-
-    if(visData.dataEntregaDocs.trim() === ''){
-      setModalMessageError("Preencha a Data de entrega dos documentos")
       setOpenModalError(true)
       return false;
     }
@@ -1093,253 +951,6 @@ const Editar = () =>{
               </div>
             </form>
 
-            {/***TODO: INPUT DOCUMENTOS***/}
-            <form className={styles.form_dados_documentos} autoComplete='off' method='post' encType='multipart/form-data'>
-              <div className={styles.divisoria} id={styles.divis_docs}>
-                <hr></hr>
-                <span className={styles.title_divis}>Documentos</span>
-              </div>
-
-              <div className={styles.form_group}>
-                <div className={styles.div_input}>
-                  <label for="cpf">CPF:</label>
-                  <IMaskInput
-                    id='cpf' 
-                    name='cpf' 
-                    mask="000.000.000-00"
-                    value={visData.cpf}
-                    onAccept={(value) => {
-                      handleEditValue({
-                        target: {
-                          name: 'cpf',
-                          value: value,
-                        },
-                      })
-                    }}
-                  />
-                </div>
-
-                <div className={styles.div_input}>
-                  <label for="pis_pasep">PIS/PASEP:</label>
-                  <input 
-                    className={styles.input_pis_pasep} 
-                    type='text' 
-                    id='pis_pasep' 
-                    name='pisPasep' 
-                    value={visData.pisPasep} 
-                    maxLength={15}
-                    onChange={handleEditValue}>
-                  </input>
-                </div>
-
-                <div className={styles.div_input}>
-                  <select id='selectCnh' name='selectCnh' value={selectCnh} onChange={(e) => {setSelectCnh(e.target.value)}}>
-                    <option value="Não">Não</option>
-                    <option value="Sim">Sim</option>
-                  </select>
-                </div>
-
-                <div className={`${styles.div_input} ${selectCnh === "Não" || selectCnh === "" ? styles.disabled : ""}`}>
-                  <label for="cnh">CNH:</label>
-                  <input 
-                    className={styles.input_cnh}
-                    type='text' 
-                    id='cnh' 
-                    name='cnh' 
-                    value={visData.cnh} 
-                    maxLength={11}
-                    disabled={selectCnh === "Não" || selectCnh === "" ? styles.disabled : ""}
-                    onChange={handleEditValue}>
-                  </input>
-                </div>
-              </div>
-
-              <div className={styles.form_group}>
-                <div className={styles.div_input}>
-                  <label for="rg">RG:</label>
-                  <input 
-                    className={styles.input_rg} 
-                    type='text' 
-                    id='rg' 
-                    name='rg' 
-                    value={visData.rg} 
-                    maxLength={9}
-                    onChange={handleEditValue}>
-                  </input>
-                </div>
-
-                <div className={styles.div_input}>
-                  <label for="rg_data_exped">Data Exped:</label>
-                  <input 
-                    type='date' 
-                    id='rg_data_exped' 
-                    name='rgDataExped' 
-                    value={visData.rgDataExped} 
-                    onChange={handleEditValue}>
-                  </input>
-                </div>
-
-                <div className={styles.div_input}>
-                  <label for="rg_orgao_exped">Orgão Exped:</label>
-                  <select id='rg_orgao_exped' name='rgOrgaoExped' value={visData.rgOrgaoExped} onChange={handleEditValue}>
-                    <option disabled={true} value="">Selecione</option>
-                    <option value="SSP/AM">SSP/AM</option>
-                    <option value="PC/AM">PC/AM</option>
-                    <option value="PM/AM">PM/AM</option>
-                    <option value="Detran/AM">Detran/AM</option>
-                    <option value="Outros">Outros</option>
-                    <option value="NI">NI</option>
-                  </select>
-                </div>
-
-                <div className={styles.div_input}>
-                  <label for="rg_uf">UF:</label>
-                  <select id="rg_uf" name="rgUf" value={visData.rgUf} onChange={handleEditValue}>
-                    <option disabled={true} value="">Selecione:</option>
-                    <option value="AM">AM</option>
-                    <option value="AC">AC</option>
-                    <option value="AL">AL</option>
-                    <option value="AP">AP</option>
-                    <option value="BA">BA</option>
-                    <option value="CE">CE</option>
-                    <option value="DF">DF</option>
-                    <option value="ES">ES</option>
-                    <option value="GO">GO</option>
-                    <option value="MA">MA</option>
-                    <option value="MT">MT</option>
-                    <option value="MS">MS</option>
-                    <option value="MG">MG</option>
-                    <option value="PA">PA</option>
-                    <option value="PB">PB</option>
-                    <option value="PR">PR</option>
-                    <option value="PE">PE</option>
-                    <option value="PI">PI</option>
-                    <option value="RJ">RJ</option>
-                    <option value="RN">RN</option>
-                    <option value="RS">RS</option>
-                    <option value="RO">RO</option>
-                    <option value="RR">RR</option>
-                    <option value="SC">SC</option>
-                    <option value="SP">SP</option>
-                    <option value="SE">SE</option>
-                    <option value="TO">TO</option>
-                    <option value="NI">NI</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className={styles.form_group}>
-                <div className={styles.div_input}>
-                  <label for="titulo">Título:</label>
-                  <input 
-                    className={styles.input_titulo} 
-                    type='text' 
-                    id='titulo' 
-                    name='titulo' 
-                    value={visData.titulo} 
-                    maxLength={15}
-                    onChange={handleEditValue}>
-                  </input>
-                </div>
-
-                <div className={styles.div_input}>
-                  <label for="titulo_zona">Zona:</label>
-                  <input 
-                    className={styles.input_titulo_zona} 
-                    type='text' 
-                    id='titulo_zona'
-                    name='tituloZona' 
-                    value={visData.tituloZona} 
-                    maxLength={4}
-                    onChange={handleEditValue}>
-                  </input>
-                </div>
-
-                <div className={styles.div_input}>
-                  <label for="titulo_secao">Seção:</label>
-                  <input 
-                    className={styles.input_titulo_secao} 
-                    type='text' 
-                    id='titulo_secao' 
-                    name='tituloSecao' 
-                    value={visData.tituloSecao} 
-                    maxLength={5}
-                    onChange={handleEditValue}>
-                  </input>
-                </div>
-
-                <div className={styles.div_input}>
-                  <label for="titulo_uf">UF:</label>
-                  <select id="titulo_uf" name="tituloUf" value={visData.tituloUf} onChange={handleEditValue}>
-                    <option disabled={true} value="">Selecione:</option>
-                    <option value="AM">AM</option>
-                    <option value="AC">AC</option>
-                    <option value="AL">AL</option>
-                    <option value="AP">AP</option>
-                    <option value="BA">BA</option>
-                    <option value="CE">CE</option>
-                    <option value="DF">DF</option>
-                    <option value="ES">ES</option>
-                    <option value="GO">GO</option>
-                    <option value="MA">MA</option>
-                    <option value="MT">MT</option>
-                    <option value="MS">MS</option>
-                    <option value="MG">MG</option>
-                    <option value="PA">PA</option>
-                    <option value="PB">PB</option>
-                    <option value="PR">PR</option>
-                    <option value="PE">PE</option>
-                    <option value="PI">PI</option>
-                    <option value="RJ">RJ</option>
-                    <option value="RN">RN</option>
-                    <option value="RS">RS</option>
-                    <option value="RO">RO</option>
-                    <option value="RR">RR</option>
-                    <option value="SC">SC</option>
-                    <option value="SP">SP</option>
-                    <option value="SE">SE</option>
-                    <option value="TO">TO</option>
-                    <option value="NI">NI</option>
-                  </select>
-                </div>
-
-                <div className={styles.div_input}>
-                  <select id='selectDocMilitar' name='selectDocMilitar' value={selectDocMilitar} onChange={(e) => {setSelectDocMilitar(e.target.value)}}>
-                    <option value="Não">Não</option>
-                    <option value="Sim">Sim</option>
-                  </select>
-                </div>
-
-                <div className={`${styles.div_input} ${selectDocMilitar === "Não" || selectDocMilitar === "" ? styles.disabled : ""}`}>
-                  <label for="doc_militar">Doc. Militar:</label>
-                  <input
-                    className={styles.input_doc_militar} 
-                    type='text' 
-                    id='doc_militar' 
-                    name='docMilitar' 
-                    value={visData.docMilitar} 
-                    maxLength={15}
-                    disabled={selectDocMilitar === "Não" || selectDocMilitar === "" ? styles.disabled : ""} 
-                    onChange={handleEditValue}>
-                  </input>
-                </div>
-
-                <div className={`${styles.div_input} ${selectDocMilitar === "Não" || selectDocMilitar === "" ? styles.disabled : ""}`}>
-                  <label for="doc_militar_serie">Série:</label>
-                  <input 
-                    className={styles.input_doc_militar_serie} 
-                    type='text' 
-                    id='doc_militar_serie' 
-                    name='docMilitarSerie' 
-                    value={visData.docMilitarSerie} 
-                    maxLength={12}
-                    disabled={selectDocMilitar === "Não" || selectDocMilitar === "" ? styles.disabled : ""} 
-                    onChange={handleEditValue}>
-                  </input>
-                </div>
-              </div>
-            </form>
-
             {/***TODO: INPUT DADOS ENDEREÇO***/}
             <form className={styles.form_dados_endereco} autoComplete='off' method='post' encType='multipart/form-data'>
               <div className={styles.divisoria} id={styles.divis_docs}>
@@ -1437,55 +1048,6 @@ const Editar = () =>{
                       <option key={index} value={cidade}>{cidade}</option>
                     ))}
                   </select>
-                </div>
-              </div>
-            </form>
-
-            {/***TODO: INPUT DADOS BANCÁRIOS***/}
-             <form className={styles.form_dados_bancarios} autoComplete='off' method='post' encType='multipart/form-data'>
-                <div className={styles.divisoria} id={styles.divis_docs}>
-                  <hr></hr>
-                  <span className={styles.title_divis}>Dados Bancários</span>
-                </div>
-
-                <div className={styles.form_group}>
-                  <div className={styles.div_input}>
-                    <label for="banco">Banco:</label>
-                    <input
-                      className={styles.input_banco} 
-                      type='text' 
-                      id='banco' 
-                      name='banco' 
-                      value={visData.banco} 
-                      maxLength={80}
-                      onChange={handleEditValue}>
-                    </input>
-                  </div>
-
-                <div className={styles.div_input}>
-                  <label for="banco_agencia">Agência:</label>
-                  <input 
-                    className={styles.input_banco_agencia} 
-                    type='text' 
-                    id='banco_agencia' 
-                    name='bancoAgencia' 
-                    value={visData.bancoAgencia} 
-                    maxLength={9}
-                    onChange={handleEditValue}>
-                  </input>
-                </div>
-
-                <div className={styles.div_input}>
-                  <label for="banco_conta">Conta:</label>
-                  <input 
-                    className={styles.input_banco_conta} 
-                    type='text' 
-                    id='banco_conta' 
-                    name='bancoConta' 
-                    value={visData.bancoConta} 
-                    maxLength={20}
-                    onChange={handleEditValue}>
-                  </input>
                 </div>
               </div>
             </form>
@@ -1588,177 +1150,8 @@ const Editar = () =>{
 
 
             {/***TODO: INPUT DADOS VÍNCULO***/}
-            <form className={styles.form_dados_vinculo} autoComplete='off' method='post' encType='multipart/form-data'>
-              <div className={styles.divisoria} id={styles.divis_docs}>
-                <hr></hr>
-                <span className={styles.title_divis}>Vínculo</span>
-              </div>
 
-              <div className={styles.form_group}>
-                <div className={styles.div_input}>
-                  <label for="vinculo">Vínculo:</label>
-                  <select id='vinculo' name='vinculo' value={visData.vinculo} onChange={handleEditValue}>
-                    <option disabled={true} value="">Selecione</option>
-                    <option value="Cargo Comissionado">Cargo Comissionado</option>
-                    <option value="Estagiário(a)">Estagiário(a)</option>
-                    <option value="Temporário">Temporário</option>
-                    <option value="Efetivo">Efetivo</option>
-                    <option value="Outros">Outros</option>
-                  </select>
-                </div>
-
-                <div className={styles.div_input}>
-                  <label for="setorDepartamento">Setor/Departamento:</label>
-                  <select id='setorDepartamento' name='setorDepartamento' value={visData.setorDepartamento} onChange={handleEditValue}>
-                    <option disabled={true} value="">Selecione</option>
-                    <option value="Apoio Administrativo">Apoio Administrativo</option>
-                    <option value="Transporte">Transporte</option>
-                    <option value="Gabinete">Gabinete</option>
-                    <option value="Gerência de Análise">Gerência de Análise</option>
-                    <option value="Gerência de Operações">Gerência de Operações</option>
-                    <option value="Gerência de Contra Inteligência">Gerência de Contra Inteligência</option>
-                    <option value="Laboratório">Laboratório</option>
-                    <option value="Inteligência Cibernética">Inteligência Cibernética</option>
-                    <option value="Outros">Outros</option>
-                    <option value="NI">NI</option>
-                  </select>
-                </div>
-
-                <div className={styles.div_input}>
-                  <label for="cargoFuncao">Cargo/Função:</label>
-                  <input 
-                    className={styles.input_cargoFuncao} 
-                    type='text' 
-                    id='cargoFuncao' 
-                    name='cargoFuncao' 
-                    value={visData.cargoFuncao} 
-                    maxLength={30}
-                    onChange={handleEditValue}>
-                  </input>
-                </div>
-              </div>
-
-              <div className={styles.form_group}>
-                <div className={styles.div_input}>
-                  <label for="cargoEfetivo">Cargo Efetivo:</label>
-                  <input 
-                    className={styles.input_cargoEfetivo} 
-                    type='text' 
-                    id='cargoEfetivo' 
-                    name='cargoEfetivo' 
-                    value={visData.cargoEfetivo} 
-                    maxLength={30}
-                    onChange={handleEditValue}>
-                  </input>
-                </div>
-                  
-                <div className={styles.div_input}>
-                  <label for="status">Status:</label>
-                  <select id='status' name='statusServidor' value={visData.statusServidor} onChange={handleEditValue}>
-                    <option disabled={true} value="">Selecione</option>
-                    <option value="Ativo">Ativo</option>
-                    <option value="Desligado">Desligado</option>
-                  </select>
-                </div>
-
-                <div className={styles.div_input}>
-                  <label for="matriculaOrigem">Matricula Origem:</label>
-                  <input 
-                    className={styles.input_matriculaOrigem} 
-                    type='text' 
-                    id='matriculaOrigem' 
-                    name='matriculaOrigem' 
-                    value={visData.matriculaOrigem} 
-                    maxLength={15}
-                    onChange={handleEditValue}>
-                  </input>
-                </div>
-              </div>
-
-              <div className={styles.form_group}>
-                <div className={styles.div_input}>
-                  <label for="orgaoOrigem">Orgão Origem:</label>
-                  <input 
-
-                    className={styles.input_orgaoOrigem} 
-                    type='text' 
-                    id='orgaoOrigem' 
-                    name='orgaoOrigem' 
-                    value={visData.orgaoOrigem} 
-                    maxLength={50}
-                    onChange={handleEditValue}>
-                  </input>
-                </div>
-
-                <div className={styles.div_input}>
-                  <label for="matriculaSeai">Matricula SEAI:</label>
-                  <input 
-                    className={styles.input_matriculaSeai} 
-                    type='text' 
-                    id='matriculaSeai' 
-                    name='matriculaSeai' 
-                    value={visData.matriculaSeai} 
-                    maxLength={15}
-                    onChange={handleEditValue}>
-                  </input>
-                </div>
-              </div>
-                  
-              <div className={styles.form_group}>
-                <div className={styles.div_input} id={styles.data_docs}>
-                  <label for="dataEntregaDocs">Data de entrega dos documentos:</label>
-                  <input 
-                    className={styles.input_data_docs}
-                    type='date' 
-                    id='dataEntregaDocs' 
-                    name='dataEntregaDocs' 
-                    value={visData.dataEntregaDocs} 
-                    onChange={handleEditValue}>
-                  </input>
-                </div>
-              </div>
-
-              <div className={styles.form_group}>
-                  <div className={styles.div_input} id={styles.anexoss}>
-                    <label for="nome_anexos">Anexos:</label>
-                    <input
-                     name='pdfs'
-                     id={styles.input_files}
-                     type='file'
-                     accept='application/pdf'
-                     multiple
-                     onChange={handleFileChange}
-                     >
-                    </input>
-
-                    <div className={styles.name_file2} id={styles.name_edit}>
-                      {files.map((file, index) => (
-                        <div key={index}>
-                          <a href={`${endpoint}/${file.path}`} target="_blank" rel="noopener noreferrer">
-                            📄 {file.name} {index + 1}
-                          </a>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className={styles.div_input} id={styles.anotacoes_vis}>
-                    <label for="anotacoes">Anotações:</label>
-                    <textarea 
-                      className={styles.input_anotacoes} 
-                      type='text' 
-                      id='anotacoes' 
-                      name='anotacoes' 
-                      value={visData.anotacoes} 
-                      onChange={handleEditValue}>
-                    </textarea>
-                </div>
-              </div>
-
-              <div className={styles.form_group} id={styles.anotacoes}>
-
-              </div>
-            </form>
+            
           </div>
         </div>
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from '../pages/styles.module.css'
+import styles from '../pages/stylesModule.module.css'
 
 export default function Modal({openModal, setOpenModal, message, reload}) {
   if(!openModal) return null

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import styles from './styles.module.css'
+import styles from './stylesModule.module.css'
 import { Link } from 'react-router-dom'
 import Axios from 'axios'
 import { useFuncionario } from './FuncionarioContext'
@@ -14,7 +14,7 @@ import { FilterX } from 'lucide-react'
 function Historico ({ funcionarios }){
   const endpoint = process.env.REACT_APP_API_BASE_URL;
 
-  const [dataSeaiFuncionarios, setDataSeaiFuncionarios] = useState([])
+  const [dataFuncionarios, setDataFuncionarios] = useState([])
   const [totalFunc, setTotalFunc] = useState(0)
 
   const { usuario } = useFuncionario();
@@ -37,17 +37,17 @@ function Historico ({ funcionarios }){
 
   //TODO: GET TOTALFUNC AND TOTAL DATA
   useEffect(() =>{
-    const dataSeaiFuncionarios = async() =>{
+    const dataFuncionarios = async() =>{
       const reqData = await fetch(`${endpoint}/getRegisters`)
       const resData = await reqData.json()
-      setDataSeaiFuncionarios(resData)
+      setDataFuncionarios(resData)
       setFiltros(resData || [])
 
       const reqTotal = await fetch(`${endpoint}/getRegisterstot`);
       const resTotal = await reqTotal.json();
       setTotalFunc(resTotal.totalFunc);
     }
-    dataSeaiFuncionarios()
+    dataFuncionarios()
   }, [])
 
   //TODO: DELETE FUNC
@@ -153,14 +153,6 @@ function Historico ({ funcionarios }){
             <div className={styles.input_filters}>
               <select id='setorDepartamento' name='setorDepartamento' onChange={(e) => setfiltroSetorDepartamento(e.target.value)} value={filtroSetorDepartamento}>
                 <option disabled={true} value="">Setor/Departamento</option>
-                <option value="Apoio Administrativo">Apoio Administrativo</option>
-                <option value="Transporte">Transporte</option>
-                <option value="Gabinete">Gabinete</option>
-                <option value="Gerência de Análise">Gerência de Análise</option>
-                <option value="Gerência de Operações">Gerência de Operações</option>
-                <option value="Gerência de Contra Inteligência">Gerência de Contra Inteligência</option>
-                <option value="Laboratório">Laboratório</option>
-                <option value="Inteligência Cibernética">Inteligência Cibernética</option>
                 <option value="Outros">Outros</option>
                 <option value="">-Limpar-</option>
               </select>
@@ -169,10 +161,7 @@ function Historico ({ funcionarios }){
             <div className={styles.input_filters} onChange={(e) => setFiltroVinculo(e.target.value)} value={filtroVinculo}>
               <select id='vinculo' name='vinculo'>
                 <option disabled={true} value="">Vínculo</option>
-                <option value="Cargo Comissionado">Cargo Comissionado</option>
-                <option value="Estagiário(a)">Estagiário(a)</option>
                 <option value="Temporário">Temporário</option>
-                <option value="Efetivo">Efetivo</option>
                 <option value="">-Limpar-</option>
               </select>
             </div>

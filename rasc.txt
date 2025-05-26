@@ -1,0 +1,197 @@
+if(nome === ''){
+      setModalMessageError("Preencha o nome")
+      setOpenModalError(true)
+      return
+    }
+    if(regex.test(nome) === true){
+      setModalMessageError("Preencha o nome apenas com letras")
+      setOpenModalError(true)
+      return
+    }
+
+    if(sexo === ''){
+      setModalMessageError("Preencha o sexo")
+      setOpenModalError(true)
+      return
+    }
+
+    if(data_nasc === ''){
+      setModalMessageError("Peencha a data de nascimento")
+      setOpenModalError(true)
+      return
+    }
+
+    if(estado === ''){
+      setModalMessageError("Preencha o estado")
+      setOpenModalError(true)
+      return
+    }
+
+    if(nacionalidade.trim() === ''){
+      setModalMessageError("Preencha a nacionalidade")
+      setOpenModalError(true)
+      return
+    }
+    if(regex.test(nacionalidade) === true){
+      setModalMessageError("Preencha a nacionalidade apenas com letras")
+      setOpenModalError(true)
+      return
+    }
+
+    if(naturalidade.trim() === ''){
+      setModalMessageError("Preencha a naturalidade")
+      setOpenModalError(true)
+      return
+    }
+    if(regex.test(naturalidade) === true){
+      setModalMessageError("Preencha a naturalidade apenas com letras")
+      setOpenModalError(true)
+      return
+    }
+
+    if(raca === ''){
+      setModalMessageError("Preencha a raça")
+      setOpenModalError(true)
+      return
+    }
+
+    if(telefone.trim() === ''){
+      setModalMessageError("Digite o telefone")
+      setOpenModalError(true)
+      return
+    }
+    if(!regex_num.test(telefone)){
+      setModalMessageError("Preencha o telefone apenas com números, parênteses e hífem")
+      setOpenModalError(true)
+      return
+    }
+
+    if(email.trim() === ''){
+      setModalMessageError("Preencha o email")
+      setOpenModalError(true)
+      return
+    }
+
+    if(nomePai.trim() === ''){
+      setModalMessageError("Preencha o nome do pai")
+      setOpenModalError(true)
+      return
+    }
+    if(regex.test(nomePai) === true){
+      setModalMessageError("Preencha o nome do pai apenas com letras")
+      setOpenModalError(true)
+      return
+    }
+    if(cpfPai.trim() === ''){
+      setModalMessageError("Preencha o cpf do pai")
+      setOpenModalError(true)
+    }
+    if(regex_cpf.test(cpfPai) === true){
+      setModalMessageError("Preencha o cpf do pai corretamente")
+      setOpenModalError(true)
+    }
+    if(dataNascPai.trim() === ''){
+      setModalMessageError("Preencha a data de nascimento do pai")
+      setOpenModalError(true)
+    }
+
+    if(nomeMae.trim() === ''){
+      setModalMessageError("Preencha o nome da mãe")
+      setOpenModalError(true)
+      return
+    }
+    if(regex.test(nomeMae) === true){
+      setModalMessageError("Preencha o nome da mãe apenas com letras")
+      setOpenModalError(true)
+      return
+    }
+    if(cpfMae.trim() === ''){
+      setModalMessageError("Preencha o cpf da mãe")
+      setOpenModalError(true)
+    }
+    if(regex_cpf.test(cpfMae) === true){
+      setModalMessageError("Preencha o cpf da mãe corretamente")
+      setOpenModalError(true)
+    }
+    if(dataNascMae.trim() === ''){
+      setModalMessageError("Preencha a data de nascimento da mãe")
+      setOpenModalError(true)
+    }
+
+    if(estadoCivil === ''){
+      setModalMessageError("Preencha o Estado Civil")
+      setOpenModalError(true)
+      return
+    }
+
+    if(filhos === ''){
+      setModalMessageError("Preencha a quantidade de filhos")
+      setOpenModalError(true)
+      return
+    }
+
+    if(cpf.trim() === ''){
+      setModalMessageError("Preencha o CPF")
+      setOpenModalError(true)
+    }
+    if(regex_cpf.test(cpf) === true){
+      setModalMessageError("Preencha o CPF corretamente")
+      setOpenModalError(true)
+    }
+
+    if(pisPasep.trim() === ''){
+      setModalMessageError("Preencha o PIS/PASEP")
+      setOpenModalError(true)
+    }
+
+    if(cnh.trim() === ''){
+      setModalMessageError("Preencha a CNH")
+      setOpenModalError(true)
+    }
+
+    app.post("/cadastrar", upload, (req, res) =>{
+    const files = req.files;
+    const fileData = files.map(file =>({
+        fileName: file.originalname,
+        filePath: file.path
+    })); 
+
+    fileData.forEach(({fileName, filePath}) =>{
+        let sqlFiles = "INSERT INTO teste2(fileName, filePath) VALUES (?, ?)";
+        db.query(sqlFiles, [fileName, filePath], (err, res) =>{
+            if (err) {
+                return db.rollback(() =>{
+                    console.log("Erro ao cadastrar dados vínculo:", err);
+                    //res.status(500).send("Erro ao cadastrar dados vínculo");
+                })
+            } else{
+                console.log("-Dados vínculo cadastrados com sucesso\n");
+            }
+        })
+
+        db.commit((err) => {
+            if (err) {
+                return db.rollback(() => {
+                    console.error("Erro ao finalizar a transação:", err);
+                    //res.status(500).send("Erro ao finalizar a transação.");
+                });
+            }
+            console.log("✔ Cadastro realizado com sucesso ✔\n");
+            //res.status(200).send("Cadastro realizado com sucesso");
+        });
+    });
+})
+
+
+  const sendfiles = () =>{
+    const formData = new FormData();
+
+    for(let i = 0; i< files.length; i++){
+      formData.append('files', files[i]);
+    }
+    formData.append("arquivosNome", files)
+
+    const response = Axios.post("http://localhost:3001/cadastrar", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+  }
